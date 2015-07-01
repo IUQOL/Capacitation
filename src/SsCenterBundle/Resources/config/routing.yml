@@ -1,0 +1,11 @@
+ss_center_homepage:
+    path:      /main
+    defaults: { _controller: CapacitationBundle:Default:main }
+
+redirect_main:
+    path:      /mainRedirect
+    defaults: { _controller: CapacitationBundle:Default:mainRedirect }
+
+capacitation_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: CapacitationBundle:Default:index }
