@@ -1,5 +1,13 @@
 {% extends 'MainBundle:Master:master.html.twig' %}
 
 {% block content %}
-Hello {{ name }}!
+   {%if  res %}
+    
+    Bienvenidos!!!!!   {{ prueba }} <br>
+    {%else %}
+    NUEVA PRUEBA    <br>
+    {%endif%}
+    {{ usuario.name ~ ' ' ~ usuario.doc}} <br>
+    {{ res }}
+    
 {% endblock content%}
