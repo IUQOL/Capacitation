@@ -28,4 +28,24 @@ class DefaultController extends Controller
                'res' => $result,
           )      );
     }
+    
+    public function page1Action($age)
+    {
+        return $this->render('MainBundle:Default:page1.html.twig', array('age'=>$age));
+    }
+    
+    public function page2Action($name)
+    {
+        return $this->render('MainBundle:Default:page2.html.twig', array('name'=>$name));
+    }
+    
+    public function page3Action($hour)
+    {
+       
+                
+        $date = new \DateTime('2006-12-12');
+        $date->modify('+'.$hour.' hour');
+        
+        return $this->render('MainBundle:Default:page3.html.twig', array('hour'=>$date));
+    }
 }

@@ -1,6 +1,18 @@
 home:
     path:     /
     defaults: { _controller: MainBundle:Default:main }
+    
+page1:
+    path:     /prueba1/{age}
+    defaults: { _controller: MainBundle:Default:page1, age: 18 }
+    
+page2:
+    path:     /prueba2/{name}
+    defaults: { _controller: MainBundle:Default:page2, name: sscenter }
+    
+page3:
+    path:     /prueba3/{hour}
+    defaults: { _controller: MainBundle:Default:page3, hour: 16 }
 
 
 
