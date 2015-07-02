@@ -1,6 +1,6 @@
 capacitation:
     resource: "@CapacitationBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /PRUEBA/
 
 app:
     resource: "@AppBundle/Controller/"

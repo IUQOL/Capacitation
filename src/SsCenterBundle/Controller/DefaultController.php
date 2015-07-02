@@ -23,4 +23,11 @@ class DefaultController extends Controller
     {
         return $this->render('CapacitationBundle:Default:index.html.twig', array('name' => $name));
     }
+    
+    public function addingAction($val1)
+    {
+        
+        return new Response('Valor' . $val1);
+        
+    }
 }

@@ -9,3 +9,7 @@ redirect_main:
 capacitation_homepage:
     path:     /hello/{name}
     defaults: { _controller: CapacitationBundle:Default:index }
+    
+adding:
+    path:     /add/{val1}
+    defaults: { _controller: CapacitationBundle:Default:adding, val1: 6 }
