@@ -18,7 +18,6 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl('ss_center_homepage'));
     }
     
-    
     public function indexAction($name)
     {
         return $this->render('CapacitationBundle:Default:index.html.twig', array('name' => $name));
