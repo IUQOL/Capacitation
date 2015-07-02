@@ -4,6 +4,7 @@ namespace SsCenterBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use \Symfony\Component\HttpFoundation\Response;
+use \Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
@@ -24,10 +25,10 @@ class DefaultController extends Controller
         return $this->render('CapacitationBundle:Default:index.html.twig', array('name' => $name));
     }
     
-    public function addingAction($val1)
+    public function addingAction($val1, Request $request) 
     {
-        
-        return new Response('Valor' . $val1);
+    
+        return new Response('Valor ' . $val1. ' '. $request->getHttpHost());
         
     }
 }
