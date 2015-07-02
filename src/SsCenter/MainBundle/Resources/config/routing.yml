@@ -5,6 +5,8 @@ home:
 page1:
     path:     /prueba1/{age}
     defaults: { _controller: MainBundle:Default:page1, age: 18 }
+    requirements:
+        age: \d+
     
 page2:
     path:     /prueba2/{name}

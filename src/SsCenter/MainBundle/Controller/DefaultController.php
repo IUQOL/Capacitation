@@ -41,11 +41,8 @@ class DefaultController extends Controller
     
     public function page3Action($hour)
     {
-       
-                
-        $date = new \DateTime('2006-12-12');
+        $date = new \DateTime('2015-12-12');
         $date->modify('+'.$hour.' hour');
-        
         return $this->render('MainBundle:Default:page3.html.twig', array('hour'=>$date));
     }
 }
