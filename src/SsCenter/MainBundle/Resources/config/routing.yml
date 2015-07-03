@@ -15,6 +15,10 @@ page2:
 page3:
     path:     /prueba3/{hour}
     defaults: { _controller: MainBundle:Default:page3, hour: 16 }
+    
+page4:
+    path:     /prueba4
+    defaults: { _controller: MainBundle:Default:page4 }
 
 
 

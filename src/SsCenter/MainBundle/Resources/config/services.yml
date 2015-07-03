@@ -1,4 +1,8 @@
+parameters:
+    math.classname: 'SsCenter\MainBundle\Classes\MathBasic'
+
 services:
-#    main.example:
-#        class: SsCenter\MainBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    main.math_basics:
+        class: %math.classname%
+        arguments: [%main.counter%]
+        
