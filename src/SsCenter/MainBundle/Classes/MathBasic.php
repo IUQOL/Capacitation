@@ -26,6 +26,12 @@ class MathBasic {
      */
     private $counter;
     
+    private $a;
+    
+    private $b;
+    
+    private $c;
+    
     
     /**
      * Constructor de la clase
@@ -58,6 +64,20 @@ class MathBasic {
     {
         $this->counter++;
         return $value1-$value2;
+    }
+    
+    
+    /**
+     * Restar dos valores
+     * @param int $value1
+     * @param int $value2
+     * @return int
+     */
+    public function prueba($value1, $value2)
+    {
+        $this->counter++;
+        $value3 = ($this->a - $this->b)*$this->c;
+        return ($value1*$value2)/$value3;
     }
     
     /**
