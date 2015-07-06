@@ -5,6 +5,9 @@ namespace SsCenter\MainBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use \Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use SsCenter\MainBundle\Form\Type\SsCenterType;
+use SsCenter\MainBundle\Classes\SsCenter;
+use SsCenter\MainBundle\Entity\Item;
 
 class DefaultController extends Controller
 {
@@ -68,33 +71,44 @@ class DefaultController extends Controller
     
     public function page6Action(Request $request)
     {
-        $form = $this->createFormBuilder()
-                ->add('nombre')
-                ->add('descripcion','textarea',array('required' => true))
-                ->add('valor1','integer')
-                ->getForm();
-        
- 
+       //Crear 
+        $sscenter = new SsCenter('','',0);
         
         
         
-        return $this->render('MainBundle:Default:page6.html.twig', array (
-                              'form' => $form->createView()));
+        
+        
+        return $this->proccesForm($request, $sscenter);
     }
     
-    public function manejador1Action(Request $request)
+    
+    
+    
+    private function proccesForm(Request $request, SsCenter $sscenter) 
     {
-      
-        $form = $this->createFormBuilder()
-                ->add('nombre')
-                ->add('descripcion','textarea',array('required' => true))
-                ->add('valor1','integer')
-                ->getForm();
+        $form = $this->createForm(new SsCenterType(),$sscenter) ;
         
         if($form->handleRequest($request)->isValid())
         {
-            $data = $form->getData();
-            return new Response(var_dump($data));
+            //$data = $form->getData();
+            //Logica a realizar con el objeto
+            $item = new Item();
+        
+        $item->setDescription('Descripción de Prueba');
+        $item->setName('Item1');
+        $item->setPrice(2);
+        $em = $this->getDoctrine()->getManager();
+        
+        $em->persist($item);
+        
+        $em->flush();
+        
+        
+            
+            return new Response('Se creo el objeto con id: '.var_dump($item));
         }
+        return $this->render('MainBundle:Default:page6.html.twig', array (
+                              'form' => $form->createView()));
     }
+   
 }

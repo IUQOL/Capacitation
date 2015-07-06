@@ -1,3 +1,7 @@
+main_crud_sscenter:
+    resource: "@MainBundle/Resources/config/routing/item.yml"
+    prefix:   /crud_sscenter
+
 home:
     path:     /
     defaults: { _controller: MainBundle:Default:main }

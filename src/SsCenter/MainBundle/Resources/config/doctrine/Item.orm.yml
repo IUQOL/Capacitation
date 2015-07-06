@@ -1,0 +1,17 @@
+SsCenter\MainBundle\Entity\Item:
+    type: entity
+    table: item
+    id:
+        id:
+            type: integer
+            generator: { strategy: IDENTITY }
+    fields:
+        name:
+            type: string
+            length: 100
+        price:
+            type: decimal
+            scale: 2
+        description:
+            type: text
+    lifecycleCallbacks: {  }

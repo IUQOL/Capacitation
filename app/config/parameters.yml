@@ -1,1 +1,0 @@
-{ parameters: { database_host: localhost, database_port: '5432', database_name: SSCENTER, database_user: root, database_password: null, mailer_transport: smtp, mailer_host: 127.0.0.1, mailer_user: null, mailer_password: null, secret: ab31d7b9cbe6ee2d85a9ed767d6da7107, database_driver: pdo_pgsql, database_path: null } }

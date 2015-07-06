@@ -1,0 +1,30 @@
+crud_sscenter:
+    path:     /
+    defaults: { _controller: "MainBundle:Item:index" }
+
+crud_sscenter_show:
+    path:     /{id}/show
+    defaults: { _controller: "MainBundle:Item:show" }
+
+crud_sscenter_new:
+    path:     /new
+    defaults: { _controller: "MainBundle:Item:new" }
+
+crud_sscenter_create:
+    path:     /create
+    defaults: { _controller: "MainBundle:Item:create" }
+    methods:  POST
+
+crud_sscenter_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "MainBundle:Item:edit" }
+
+crud_sscenter_update:
+    path:     /{id}/update
+    defaults: { _controller: "MainBundle:Item:update" }
+    methods:  [POST, PUT]
+
+crud_sscenter_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "MainBundle:Item:delete" }
+    methods:  [POST, DELETE]
