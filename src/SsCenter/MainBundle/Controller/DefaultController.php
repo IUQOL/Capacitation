@@ -4,6 +4,7 @@ namespace SsCenter\MainBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use \Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
@@ -63,5 +64,37 @@ class DefaultController extends Controller
         $service = $this->get('main.math_basics');
         $prueba = $service->Prueba($val1, $val2);
         return $this->render('MainBundle:Default:page5.html.twig', array('prueba'=>$prueba));
+    }
+    
+    public function page6Action(Request $request)
+    {
+        $form = $this->createFormBuilder()
+                ->add('nombre')
+                ->add('descripcion','textarea',array('required' => true))
+                ->add('valor1','integer')
+                ->getForm();
+        
+ 
+        
+        
+        
+        return $this->render('MainBundle:Default:page6.html.twig', array (
+                              'form' => $form->createView()));
+    }
+    
+    public function manejador1Action(Request $request)
+    {
+      
+        $form = $this->createFormBuilder()
+                ->add('nombre')
+                ->add('descripcion','textarea',array('required' => true))
+                ->add('valor1','integer')
+                ->getForm();
+        
+        if($form->handleRequest($request)->isValid())
+        {
+            $data = $form->getData();
+            return new Response(var_dump($data));
+        }
     }
 }

@@ -37,12 +37,12 @@ class MathBasic {
      * Constructor de la clase
      * @param int $counter
      */
-    public function __construct($counter = 0, $a = 0, $b = 0 , $c = 0)
+    public function __construct($parameters )
     {
-        $this->counter = $counter;
-        $this->a = $a;
-        $this->b = $b;
-        $this->c = $c;
+        $this->counter = $parameters['counter'];
+        $this->a = $parameters['values']['a'];
+        $this->b = $parameters['values']['b'];
+        $this->c = $parameters['values']['c'];
         
     }
     
@@ -77,7 +77,7 @@ class MathBasic {
      * @param int $value2
      * @return int
      */
-    public function prueba($value1, $value2)
+    public function Prueba($value1, $value2)
     {
         $value3 = ($this->a - $this->b)*$this->c;
         return ($value1*$value2)/$value3;

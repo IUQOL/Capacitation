@@ -1,0 +1,9 @@
+{% extends 'MainBundle:Master:master.html.twig' %}
+
+{% block content %}
+    <form action="{{path('manejador1')}}" method="post">
+        {{form_widget(form)}}
+        <input type="submit" />
+    </form>
+    
+{% endblock content%}

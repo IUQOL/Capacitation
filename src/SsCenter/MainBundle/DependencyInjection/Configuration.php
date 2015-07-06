@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface
                ->scalarNode('counter')->isRequired()->cannotBeEmpty()->end()
                ->arrayNode('values')
                     ->children()
-                        ->scalarNode('a')->end()
+                        ->scalarNode('a')->defaultValue(5)->end()
                         ->scalarNode('b')->end()
                         ->scalarNode('c')->isRequired()->cannotBeEmpty()->end()
         ->end();
