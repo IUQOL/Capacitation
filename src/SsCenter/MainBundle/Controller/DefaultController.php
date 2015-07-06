@@ -57,4 +57,11 @@ class DefaultController extends Controller
         $counter = $service->getCounter();
         return $this->render('MainBundle:Default:page4.html.twig', array('counter'=>$counter));
     }
+    
+    public function page5Action($val1 , $val2)
+    {
+        $service = $this->get('main.math_basics');
+        $prueba = $service->Prueba($val1, $val2);
+        return $this->render('MainBundle:Default:page5.html.twig', array('prueba'=>$prueba));
+    }
 }

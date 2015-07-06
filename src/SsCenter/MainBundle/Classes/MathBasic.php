@@ -37,9 +37,13 @@ class MathBasic {
      * Constructor de la clase
      * @param int $counter
      */
-    public function __construct($counter = 0)
+    public function __construct($counter = 0, $a = 0, $b = 0 , $c = 0)
     {
         $this->counter = $counter;
+        $this->a = $a;
+        $this->b = $b;
+        $this->c = $c;
+        
     }
     
     /**
@@ -50,7 +54,7 @@ class MathBasic {
      */
     public function add($value1, $value2)
     {
-        $this->counter++;
+//        $this->counter++;
         return $value1+$value2;
     }
     
@@ -62,7 +66,7 @@ class MathBasic {
      */
     public function substract($value1, $value2)
     {
-        $this->counter++;
+//        $this->counter++;
         return $value1-$value2;
     }
     
@@ -75,7 +79,6 @@ class MathBasic {
      */
     public function prueba($value1, $value2)
     {
-        $this->counter++;
         $value3 = ($this->a - $this->b)*$this->c;
         return ($value1*$value2)/$value3;
     }

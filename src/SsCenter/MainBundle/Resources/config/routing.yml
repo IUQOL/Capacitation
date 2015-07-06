@@ -19,6 +19,10 @@ page3:
 page4:
     path:     /prueba4
     defaults: { _controller: MainBundle:Default:page4 }
+    
+page5:
+    path:     /prueba5/{val1}/{val2}
+    defaults: { _controller: MainBundle:Default:page5, val1: 15 , val2: 10 }
 
 
 

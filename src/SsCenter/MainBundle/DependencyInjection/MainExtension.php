@@ -25,5 +25,8 @@ class MainExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         $container->setParameter('main.counter', $config['counter']);
+        $container->setParameter('main.a', $config['values']['a']);
+        $container->setParameter('main.b', $config['values']['b']);
+        $container->setParameter('main.c', $config['values']['c']);
     }
 }

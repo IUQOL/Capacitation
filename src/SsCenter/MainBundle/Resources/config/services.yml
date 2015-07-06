@@ -4,5 +4,5 @@ parameters:
 services:
     main.math_basics:
         class: %math.classname%
-        arguments: [%main.counter%]
+        arguments: [%main.counter%,%main.a%,%main.b%,%main.c%]
         

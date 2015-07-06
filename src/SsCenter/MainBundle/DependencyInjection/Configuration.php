@@ -22,6 +22,11 @@ class Configuration implements ConfigurationInterface
 
         $rootNode->children()
                ->scalarNode('counter')->isRequired()->cannotBeEmpty()->end()
+               ->arrayNode('values')
+                    ->children()
+                        ->scalarNode('a')->end()
+                        ->scalarNode('b')->end()
+                        ->scalarNode('c')->isRequired()->cannotBeEmpty()->end()
         ->end();
                   
         
