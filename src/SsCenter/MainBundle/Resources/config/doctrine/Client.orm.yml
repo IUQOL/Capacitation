@@ -4,10 +4,9 @@ SsCenter\MainBundle\Entity\Client:
     id:
         id:
             type: integer
-            generator: 
-                strategy: AUTO
-    field:
-        name:
+            generator: { strategy: AUTO }
+    fields:
+        name: 
             type: string
             length: 50
         phone:
@@ -20,10 +19,13 @@ SsCenter\MainBundle\Entity\Client:
             type: string
             length: 15
     oneToMany:
-        contact: 
-            targetEntity : SsCenter\MainBundle\Entity\ContacForm
+        contact:
+            targetEntity: SsCenter\MainBundle\Entity\ContactForm
             mappedBy: client
-        clientProducts: 
-            targetEntity : SsCenter\MainBundle\Entity\ClientProduct
+        clientProducts:
+            targetEntity: SsCenter\MainBundle\Entity\ClientProduct
             mappedBy: client
             
+           
+            
+        

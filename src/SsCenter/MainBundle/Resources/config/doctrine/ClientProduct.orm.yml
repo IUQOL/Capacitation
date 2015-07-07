@@ -2,7 +2,7 @@ SsCenter\MainBundle\Entity\ClientProduct:
     type: entity
     table: client_product
     id:
-        client: 
+        client:
             associationKey: true
         product:
             associationKey: true
@@ -11,14 +11,16 @@ SsCenter\MainBundle\Entity\ClientProduct:
             type: integer
     manyToOne:
         client:
-            targeEntity: SsCenter\MainBundle\Entity\Client
-            inversedBy: clienteProducts
+            targetEntity: SsCenter\MainBundle\Entity\Client
+            inversedBy: clientProducts
             joinColumn:
-                name: id_cliente
+                name: id_client
                 referencedColumnName: id
         product:
-            targeEntity: SsCenter\MainBundle\Entity\Product
-            inversedBy: productClients
+            targetEntity: SsCenter\MainBundle\Entity\Product
+            inversedBy: clientProducts
             joinColumn:
-                name: id_producto
+                name: id_product
                 referencedColumnName: id
+            
+    
