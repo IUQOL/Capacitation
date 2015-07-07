@@ -1,0 +1,31 @@
+SsCenter\MainBundle\Entity\ContactForm:
+    type: entity
+    table: contact_form
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        name: 
+            type: string
+            length: 50
+        phone:
+            type: string
+            length: 15
+        mail:
+            type: string
+            length: 150
+            nullable: true
+        city:
+            type: string
+            length: 15
+            nullable: true
+    manyToOne:
+        client:
+            entity: SsCenter\MainBundle\Entity\Client
+            inversedBy: contact
+            joinColumn:
+                name: id_client
+                referencedColumnName: id
+            
+            
