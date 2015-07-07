@@ -20,9 +20,10 @@ SsCenter\MainBundle\Entity\ContactForm:
             type: string
             length: 15
             nullable: true
+            
     manyToOne:
         client:
-            entity: SsCenter\MainBundle\Entity\Client
+            targetEntity: SsCenter\MainBundle\Entity\Client
             inversedBy: contact
             joinColumn:
                 name: id_client

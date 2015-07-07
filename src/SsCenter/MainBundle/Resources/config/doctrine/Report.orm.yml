@@ -1,0 +1,24 @@
+SsCenter\MainBundle\Entity\Report:
+    type: entity
+    table: report
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        notes:
+            type: text
+        date:
+            type: datetime
+    manyToOne:
+        status:
+            targetEntity: SsCenter\MainBundle\Entity\StatusNotes
+            joinColumn:
+                name: id_status_notes
+                referencedColumnName: id
+        userReport:
+            targetEntity: 'USER'
+            joinColumn: 
+                name: id_user
+                referencedColumnName: id
+                    
