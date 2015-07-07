@@ -2,17 +2,15 @@ SsCenter\MainBundle\Entity\TicketType:
     type: entity
     table: ticket_type
     id:
-        id:
-            type: integer 
-            generator: { strategy: IDENTITY }
+        id: integer
+        generator: { strategy: IDENTITY }
     fields:
         name:
             type: string
             unique: true
             length: 100
-            comment: "Name of type"
+            comment: 'Name of status'
         description:
             type: text
-            nullable: true
-            comment: "Description type"
-            
+            nullabe: true
+            comment: 'Description of the status'

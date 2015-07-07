@@ -2,19 +2,17 @@ SsCenter\MainBundle\Entity\StatusNotes:
     type: entity
     table: status_notes
     id:
-        id:
-            type: integer 
-            generator: { strategy: IDENTITY }
+        id: integer
+        generator: { strategy: IDENTITY }
     fields:
         name:
             type: string
             unique: true
             length: 100
-            comment: "Name of status notes"
+            comment: 'Name of status notes'
         description:
             type: text
-            nullable: true
-            comment: "Description of the status"
+            nullabe: true
+            comment: 'Description of the status'
             
             
-    
