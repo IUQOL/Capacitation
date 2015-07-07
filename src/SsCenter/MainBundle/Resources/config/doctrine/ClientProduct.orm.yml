@@ -1,0 +1,24 @@
+SsCenter\MainBundle\Entity\ClientProduct:
+    type: entity
+    table: client_product
+    id:
+        client: 
+            associationKey: true
+        product:
+            associationKey: true
+    fields:
+        units:
+            type: integer
+    manyToOne:
+        client:
+            targeEntity: SsCenter\MainBundle\Entity\Client
+            inversedBy: clienteProducts
+            joinColumn:
+                name: id_cliente
+                referencedColumnName: id
+        product:
+            targeEntity: SsCenter\MainBundle\Entity\Product
+            inversedBy: productClients
+            joinColumn:
+                name: id_producto
+                referencedColumnName: id

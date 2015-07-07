@@ -23,8 +23,8 @@ SsCenter\MainBundle\Entity\ContactForm:
             nullable: true
     manyToOne:
         client:
-            entity: SsCenter\MainBundle\Entity\Client
+            targeEntity: SsCenter\MainBundle\Entity\Client
             inversedBy: Contact
             joinColumn: 
                 name: id_Client
-                referncedcolumname: id
+                referncedColumnName: id

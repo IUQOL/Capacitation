@@ -16,4 +16,8 @@ SsCenter\MainBundle\Entity\Product:
         notes:
             type: text
             nullable: true
+    oneToMany:
+        clientProducts: 
+            targetEntity : SsCenter\MainBundle\Entity\ClientProduct
+            mappedBy: product
                 

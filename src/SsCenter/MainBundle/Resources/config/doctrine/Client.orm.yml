@@ -23,4 +23,7 @@ SsCenter\MainBundle\Entity\Client:
         contact: 
             targetEntity : SsCenter\MainBundle\Entity\ContacForm
             mappedBy: client
+        clientProducts: 
+            targetEntity : SsCenter\MainBundle\Entity\ClientProduct
+            mappedBy: client
             
