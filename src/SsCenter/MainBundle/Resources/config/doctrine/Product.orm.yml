@@ -19,4 +19,8 @@ SsCenter\MainBundle\Entity\Product:
         clientProducts:
             targetEntity: SsCenter\MainBundle\Entity\ClientProduct
             mappedBy: product
+        tickets:
+            targetEntity: SsCenter\MainBundle\Entity\Ticket
+            mappedBy: product
+            
         

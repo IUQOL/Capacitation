@@ -21,4 +21,8 @@ SsCenter\MainBundle\Entity\Report:
             joinColumn: 
                 name: id_user
                 referencedColumnName: id
+    manyToMany:
+        tickets:
+            targetEntity: SsCenter\MainBundle\Entity\Ticket
+            mappedBy: reports
                     

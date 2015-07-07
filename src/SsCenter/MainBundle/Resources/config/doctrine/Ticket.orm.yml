@@ -1,3 +1,80 @@
 SsCenter\MainBundle\Entity\Ticket:
     type: entity
     table: ticket
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        code: 
+            type: string
+            unique: true 
+            length: 10
+        title:
+            type: string
+        description: 
+            type: text
+        creationDate:
+            type: datetime
+            column: creation_date
+        closeDate: 
+            type: datetime
+            column: close_date
+            nullable: true
+        fileName:
+            type: string
+            column: file_name
+            nullable: true
+    manyToOne:
+        client:
+            targetEntity: SsCenter\MainBundle\Entity\Client
+            inversedBy: tickets
+            joinColumn:
+                name: id_client
+                referencedColumnName: id
+        product:
+            targetEntity: SsCenter\MainBundle\Entity\Product
+            inversedBy: tickets
+            joinColumn:
+                name: id_product
+                referencedColumnName: id
+        ticketType:
+            targetEntity: SsCenter\MainBundle\Entity\TicketType
+            joinColumn:
+                name: id_ticket_type
+                referencedColumnName: id
+        status:
+            targetEntity: SsCenter\MainBundle\Entity\StatusTicket
+            joinColumn:
+                name: id_status_ticket
+                referencedColumName: id
+        userCreator:
+            targetEntity: 'USER'
+            joinColumn: 
+                name: id_user_creator
+                referencedColumnName: id
+        userAssigned:
+            targetEntity: 'USER'
+            joinColumn:
+                name: id_user_assigned
+                referencedColumnName: id
+    manyToMany:
+        reports:
+            targetEntity: SsCenter\MainBundle\Entity\Report
+            inversedBy: tickets
+            joinTable:
+                name: ticket_report
+                joinColumns:
+                    id_ticket:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    id_report:
+                        referencedColumnName: id
+
+                
+            
+        
+    
+     
+            
+            
