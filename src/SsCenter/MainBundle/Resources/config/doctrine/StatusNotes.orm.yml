@@ -3,7 +3,7 @@ SsCenter\MainBundle\Entity\StatusNotes:
     table: status_notes
     id:
         id: integer
-        generator: { strategy: IDENTITY }
+        generator: { strategy: AUTO }
     fields:
         name:
             type: string

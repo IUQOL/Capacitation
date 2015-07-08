@@ -1,39 +1,39 @@
 main_crud_sscenter:
-    resource: "@MainBundle/Resources/config/routing/item.yml"
+    resource: "@SsCenterMainBundle/Resources/config/routing/item.yml"
     prefix:   /crud_sscenter
 
 home:
     path:     /
-    defaults: { _controller: MainBundle:Default:main }
+    defaults: { _controller: SsCenterMainBundle:Default:main }
     
 page1:
     path:     /prueba1/{age}
-    defaults: { _controller: MainBundle:Default:page1, age: 18 }
+    defaults: { _controller: SsCenterMainBundle:Default:page1, age: 18 }
     requirements:
         age: \d+
     
 page2:
     path:     /prueba2/{name}
-    defaults: { _controller: MainBundle:Default:page2, name: sscenter }
+    defaults: { _controller: SsCenterMainBundle:Default:page2, name: sscenter }
     
 page3:
     path:     /prueba3/{hour}
-    defaults: { _controller: MainBundle:Default:page3, hour: 16 }
+    defaults: { _controller: SsCenterMainBundle:Default:page3, hour: 16 }
     
 page4:
     path:     /prueba4
-    defaults: { _controller: MainBundle:Default:page4 }
+    defaults: { _controller: SsCenterMainBundle:Default:page4 }
     
 page5:
     path:     /prueba5/{val1}/{val2}
-    defaults: { _controller: MainBundle:Default:page5, val1: 15 , val2: 10 }
+    defaults: { _controller: SsCenterMainBundle:Default:page5, val1: 15 , val2: 10 }
     
 page6:
     path:     /prueba6
-    defaults: { _controller: MainBundle:Default:page6 }
+    defaults: { _controller: SsCenterMainBundle:Default:page6 }
 
 manejador1:
     path:     /manejador1
-    defaults: { _controller: MainBundle:Default:manejador1 }
+    defaults: { _controller: SsCenterMainBundle:Default:manejador1 }
 
 

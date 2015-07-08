@@ -3,6 +3,16 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: bundles/config/main.yml }
+    - { resource: bundles/config/sonata_user.yml }
+    - { resource: bundles/config/sonata_block.yml }
+    - { resource: bundles/config/fos_user.yml }
+    - { resource: bundles/config/knp_menu.yml }
+    - { resource: bundles/config/sonata_admin.yml }
+ #   - { resource: bundles/sonata_cache.yml }
+    - { resource: bundles/config/sonata_core.yml }
+    - { resource: bundles/config/swiftmailer.yml }
+    
+    
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -66,18 +76,20 @@ doctrine:
         #   2. Uncomment database_path in parameters.yml.dist
         #   3. Uncomment next line:
         #     path:     "%database_path%"
+        types:
+                json: Sonata\Doctrine\Types\JsonType
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
+        #naming_strategy: doctrine.orm.naming_strategy.underscore
+        entity_managers:
+            default:
+                mappings:
+                    SsCenterMainBundle: ~
+                    ApplicationSonataUserBundle: ~
+                    SonataUserBundle: ~
+        
+        
 
-# Swiftmailer Configuration
-swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
-    spool:     { type: memory }
 
 

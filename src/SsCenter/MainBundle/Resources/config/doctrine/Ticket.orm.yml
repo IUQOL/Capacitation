@@ -49,12 +49,12 @@ SsCenter\MainBundle\Entity\Ticket:
                 name: id_status_ticket
                 referencedColumName: id
         userCreator:
-            targetEntity: 'USER'
+            targetEntity:  Application\Sonata\UserBundle\Entity\User
             joinColumn: 
                 name: id_user_creator
                 referencedColumnName: id
         userAssigned:
-            targetEntity: 'USER'
+            targetEntity:  Application\Sonata\UserBundle\Entity\User
             joinColumn:
                 name: id_user_assigned
                 referencedColumnName: id
