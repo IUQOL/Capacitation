@@ -2,8 +2,9 @@ SsCenter\MainBundle\Entity\StatusTicket:
     type: entity
     table: status_ticket
     id:
-        id: integer
-        generator: { strategy: AUTO }
+        id:
+            type: integer
+            generator: { strategy: AUTO }
     fields:
         name:
             type: string

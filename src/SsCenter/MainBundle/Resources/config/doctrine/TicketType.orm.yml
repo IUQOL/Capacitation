@@ -2,8 +2,9 @@ SsCenter\MainBundle\Entity\TicketType:
     type: entity
     table: ticket_type
     id:
-        id: integer
-        generator: { strategy: AUTO }
+        id:
+            type: integer
+            generator: { strategy: AUTO }
     fields:
         name:
             type: string

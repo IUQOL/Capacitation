@@ -2,8 +2,9 @@ SsCenter\MainBundle\Entity\StatusNotes:
     type: entity
     table: status_notes
     id:
-        id: integer
-        generator: { strategy: AUTO }
+        id: 
+            type: integer
+            generator: { strategy: AUTO }
     fields:
         name:
             type: string

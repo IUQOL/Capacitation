@@ -17,11 +17,11 @@ SsCenter\MainBundle\Entity\Report:
             joinColumn:
                 name: status_notes_id
                 referencedColumnName: id
-        userReport:
-            targetEntity:  Application\Sonata\UserBundle\Entity\User
-            joinColumn: 
-                name: id_user
-                referencedColumnName: id
+#        userReport:
+#            targetEntity:  Application\Sonata\UserBundle\Entity\User
+#            joinColumn: 
+#                name: id_user
+#                referencedColumnName: id
     manyToMany:
         tickets:
             targetEntity: SsCenter\MainBundle\Entity\Ticket
