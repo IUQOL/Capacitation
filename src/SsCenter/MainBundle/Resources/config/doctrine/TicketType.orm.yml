@@ -3,11 +3,11 @@ SsCenter\MainBundle\Entity\TicketType:
     table: ticket_type
     id:
         id: integer
-        generator: { strategy: IDENTITY }
+        generator: { strategy: AUTO }
     fields:
         name:
             type: string
-            unique: true
+            
             length: 100
             comment: 'Name of status'
         description:

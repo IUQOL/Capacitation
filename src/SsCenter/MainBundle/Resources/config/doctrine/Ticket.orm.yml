@@ -8,7 +8,7 @@ SsCenter\MainBundle\Entity\Ticket:
     fields:
         code: 
             type: string
-            unique: true 
+             
             length: 10
         title:
             type: string

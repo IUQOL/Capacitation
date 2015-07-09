@@ -7,7 +7,6 @@ SsCenter\MainBundle\Entity\StatusNotes:
     fields:
         name:
             type: string
-            unique: true
             length: 100
             comment: 'Name of status notes'
         description:
