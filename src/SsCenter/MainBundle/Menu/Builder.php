@@ -24,7 +24,7 @@ class Builder extends ContainerAware
         
 
         // you can also add sub level's to your menu's as follows
-        $ticket->addChild('Crear', array('uri' => '#'));
+        $ticket->addChild('Crear', array('route' => 'ticket_new'));
         
          // you can also add sub level's to your menu's as follows
         $ticket->addChild('Comentar', array('uri' => '#'));

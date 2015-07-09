@@ -1,3 +1,15 @@
+ss_center_main_contactform:
+    resource: "@SsCenterMainBundle/Resources/config/routing/contactform.yml"
+    prefix:   /contactform
+
+ss_center_main_client:
+    resource: "@SsCenterMainBundle/Resources/config/routing/client.yml"
+    prefix:   /client
+
+ss_center_main_ticket:
+    resource: "@SsCenterMainBundle/Resources/config/routing/ticket.yml"
+    prefix:   /ticket
+
 main_crud_sscenter:
     resource: "@SsCenterMainBundle/Resources/config/routing/item.yml"
     prefix:   /crud_sscenter

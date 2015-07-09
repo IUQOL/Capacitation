@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TicketType
  */
-class TicketType
-{
+class TicketType {
+
     /**
      * @var string
      */
@@ -37,8 +37,7 @@ class TicketType
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->tickets = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -48,8 +47,7 @@ class TicketType
      * @param string $id
      * @return TicketType
      */
-    public function setId($id)
-    {
+    public function setId($id) {
         $this->id = $id;
 
         return $this;
@@ -60,8 +58,7 @@ class TicketType
      *
      * @return string 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -71,8 +68,7 @@ class TicketType
      * @param string $generator
      * @return TicketType
      */
-    public function setGenerator($generator)
-    {
+    public function setGenerator($generator) {
         $this->generator = $generator;
 
         return $this;
@@ -83,8 +79,7 @@ class TicketType
      *
      * @return string 
      */
-    public function getGenerator()
-    {
+    public function getGenerator() {
         return $this->generator;
     }
 
@@ -94,8 +89,7 @@ class TicketType
      * @param string $name
      * @return TicketType
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -106,8 +100,7 @@ class TicketType
      *
      * @return string 
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -117,8 +110,7 @@ class TicketType
      * @param string $description
      * @return TicketType
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -129,8 +121,7 @@ class TicketType
      *
      * @return string 
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -140,8 +131,7 @@ class TicketType
      * @param \SsCenter\MainBundle\Entity\Ticket $tickets
      * @return TicketType
      */
-    public function addTicket(\SsCenter\MainBundle\Entity\Ticket $tickets)
-    {
+    public function addTicket(\SsCenter\MainBundle\Entity\Ticket $tickets) {
         $this->tickets[] = $tickets;
 
         return $this;
@@ -152,8 +142,7 @@ class TicketType
      *
      * @param \SsCenter\MainBundle\Entity\Ticket $tickets
      */
-    public function removeTicket(\SsCenter\MainBundle\Entity\Ticket $tickets)
-    {
+    public function removeTicket(\SsCenter\MainBundle\Entity\Ticket $tickets) {
         $this->tickets->removeElement($tickets);
     }
 
@@ -162,8 +151,12 @@ class TicketType
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getTickets()
-    {
+    public function getTickets() {
         return $this->tickets;
     }
+
+    public function __toString() {
+        return $this->getName();
+    }
+
 }

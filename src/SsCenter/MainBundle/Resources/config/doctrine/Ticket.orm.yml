@@ -7,8 +7,7 @@ SsCenter\MainBundle\Entity\Ticket:
             generator: { strategy: AUTO }
     fields:
         code: 
-            type: string
-             
+            type: string             
             length: 10
         title:
             type: string

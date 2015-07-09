@@ -192,4 +192,9 @@ class Product
     {
         return $this->tickets;
     }
+    
+    public function __toString() {
+        return $this->getName();
+    }
+    
 }

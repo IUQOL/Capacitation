@@ -1,0 +1,30 @@
+ticket:
+    path:     /
+    defaults: { _controller: "SsCenterMainBundle:Ticket:index" }
+
+ticket_show:
+    path:     /{id}/show
+    defaults: { _controller: "SsCenterMainBundle:Ticket:show" }
+
+ticket_new:
+    path:     /new
+    defaults: { _controller: "SsCenterMainBundle:Ticket:new" }
+
+ticket_create:
+    path:     /create
+    defaults: { _controller: "SsCenterMainBundle:Ticket:create" }
+    methods:  POST
+
+ticket_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SsCenterMainBundle:Ticket:edit" }
+
+ticket_update:
+    path:     /{id}/update
+    defaults: { _controller: "SsCenterMainBundle:Ticket:update" }
+    methods:  [POST, PUT]
+
+ticket_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SsCenterMainBundle:Ticket:delete" }
+    methods:  [POST, DELETE]
