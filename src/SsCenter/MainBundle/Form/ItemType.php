@@ -27,7 +27,8 @@ class ItemType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'SsCenter\MainBundle\Entity\Item'
+            'data_class' => 'SsCenter\MainBundle\Entity\Item',
+            'show_legend' => false
         ));
     }
 
