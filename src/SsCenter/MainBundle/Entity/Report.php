@@ -27,7 +27,7 @@ class Report
     /**
      * @var \SsCenter\MainBundle\Entity\StatusNotes
      */
-    private $status;
+    private $statusNotes;
 
     /**
      * @var \Application\Sonata\UserBundle\Entity\User
@@ -104,32 +104,32 @@ class Report
     }
 
     /**
-     * Set status
+     * Set statusNotes
      *
-     * @param \SsCenter\MainBundle\Entity\StatusNotes $status
+     * @param \SsCenter\MainBundle\Entity\StatusNotes $statusNotes
      * @return Report
      */
-    public function setStatus(\SsCenter\MainBundle\Entity\StatusNotes $status = null)
+    public function setStatusNotes(\SsCenter\MainBundle\Entity\StatusNotes $statusNotes = null)
     {
-        $this->status = $status;
+        $this->statusNotes = $statusNotes;
 
         return $this;
     }
 
     /**
-     * Get status
+     * Get statusNotes
      *
      * @return \SsCenter\MainBundle\Entity\StatusNotes 
      */
-    public function getStatus()
+    public function getStatusNotes()
     {
-        return $this->status;
+        return $this->statusNotes;
     }
 
     /**
      * Set userReport
      *
-     * @param \Application\Sonata\UserBundle\Entity\User
+     * @param \Application\Sonata\UserBundle\Entity\User $userReport
      * @return Report
      */
     public function setUserReport(\Application\Sonata\UserBundle\Entity\User $userReport = null)
@@ -142,7 +142,7 @@ class Report
     /**
      * Get userReport
      *
-     * @return \Application\Sonata\UserBundle\Entity\User
+     * @return \Application\Sonata\UserBundle\Entity\User 
      */
     public function getUserReport()
     {

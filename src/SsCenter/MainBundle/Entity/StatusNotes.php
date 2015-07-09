@@ -29,6 +29,18 @@ class StatusNotes
      */
     private $description;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $reports;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reports = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Set id
@@ -120,5 +132,38 @@ class StatusNotes
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Add reports
+     *
+     * @param \SsCenter\MainBundle\Entity\Report $reports
+     * @return StatusNotes
+     */
+    public function addReport(\SsCenter\MainBundle\Entity\Report $reports)
+    {
+        $this->reports[] = $reports;
+
+        return $this;
+    }
+
+    /**
+     * Remove reports
+     *
+     * @param \SsCenter\MainBundle\Entity\Report $reports
+     */
+    public function removeReport(\SsCenter\MainBundle\Entity\Report $reports)
+    {
+        $this->reports->removeElement($reports);
+    }
+
+    /**
+     * Get reports
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReports()
+    {
+        return $this->reports;
     }
 }

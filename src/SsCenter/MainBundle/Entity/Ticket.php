@@ -62,7 +62,7 @@ class Ticket
     /**
      * @var \SsCenter\MainBundle\Entity\StatusTicket
      */
-    private $status;
+    private $statusTicket;
 
     /**
      * @var \Application\Sonata\UserBundle\Entity\User
@@ -305,26 +305,26 @@ class Ticket
     }
 
     /**
-     * Set status
+     * Set statusTicket
      *
-     * @param \SsCenter\MainBundle\Entity\StatusTicket $status
+     * @param \SsCenter\MainBundle\Entity\StatusTicket $statusTicket
      * @return Ticket
      */
-    public function setStatus(\SsCenter\MainBundle\Entity\StatusTicket $status = null)
+    public function setStatusTicket(\SsCenter\MainBundle\Entity\StatusTicket $statusTicket = null)
     {
-        $this->status = $status;
+        $this->statusTicket = $statusTicket;
 
         return $this;
     }
 
     /**
-     * Get status
+     * Get statusTicket
      *
      * @return \SsCenter\MainBundle\Entity\StatusTicket 
      */
-    public function getStatus()
+    public function getStatusTicket()
     {
-        return $this->status;
+        return $this->statusTicket;
     }
 
     /**
@@ -343,7 +343,7 @@ class Ticket
     /**
      * Get userCreator
      *
-     * @return \Application\Sonata\UserBundle\Entity\User
+     * @return \Application\Sonata\UserBundle\Entity\User 
      */
     public function getUserCreator()
     {
@@ -366,7 +366,7 @@ class Ticket
     /**
      * Get userAssigned
      *
-     * @return \Application\Sonata\UserBundle\Entity\User
+     * @return \Application\Sonata\UserBundle\Entity\User 
      */
     public function getUserAssigned()
     {

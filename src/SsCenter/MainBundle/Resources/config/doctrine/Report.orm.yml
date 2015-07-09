@@ -11,10 +11,11 @@ SsCenter\MainBundle\Entity\Report:
         date:
             type: datetime
     manyToOne:
-        status:
+        statusNotes:
             targetEntity: SsCenter\MainBundle\Entity\StatusNotes
+            inversedBy: reports
             joinColumn:
-                name: id_status_notes
+                name: status_notes_id
                 referencedColumnName: id
         userReport:
             targetEntity:  Application\Sonata\UserBundle\Entity\User

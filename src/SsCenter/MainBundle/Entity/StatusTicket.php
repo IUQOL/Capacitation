@@ -29,6 +29,18 @@ class StatusTicket
      */
     private $description;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $tickets;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tickets = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Set id
@@ -120,5 +132,38 @@ class StatusTicket
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Add tickets
+     *
+     * @param \SsCenter\MainBundle\Entity\Ticket $tickets
+     * @return StatusTicket
+     */
+    public function addTicket(\SsCenter\MainBundle\Entity\Ticket $tickets)
+    {
+        $this->tickets[] = $tickets;
+
+        return $this;
+    }
+
+    /**
+     * Remove tickets
+     *
+     * @param \SsCenter\MainBundle\Entity\Ticket $tickets
+     */
+    public function removeTicket(\SsCenter\MainBundle\Entity\Ticket $tickets)
+    {
+        $this->tickets->removeElement($tickets);
+    }
+
+    /**
+     * Get tickets
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTickets()
+    {
+        return $this->tickets;
     }
 }

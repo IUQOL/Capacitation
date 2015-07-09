@@ -13,5 +13,9 @@ SsCenter\MainBundle\Entity\StatusNotes:
             type: text
             nullabe: true
             comment: 'Description of the status'
+    oneToMany:
+        reports:
+            targetEntity: SsCenter\MainBundle\Entity\Report
+            mappedBy: statusNotes
             
             

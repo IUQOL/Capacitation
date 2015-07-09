@@ -14,3 +14,7 @@ SsCenter\MainBundle\Entity\TicketType:
             type: text
             nullabe: true
             comment: 'Description of the status'
+    oneToMany:
+        tickets:
+            targetEntity: SsCenter\MainBundle\Entity\Ticket
+            mappedBy: ticketType

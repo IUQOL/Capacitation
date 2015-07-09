@@ -40,13 +40,15 @@ SsCenter\MainBundle\Entity\Ticket:
                 referencedColumnName: id
         ticketType:
             targetEntity: SsCenter\MainBundle\Entity\TicketType
+            inversedBy: tickets
             joinColumn:
-                name: id_ticket_type
+                name: ticket_type_id
                 referencedColumnName: id
-        status:
+        statusTicket:
             targetEntity: SsCenter\MainBundle\Entity\StatusTicket
+            inversedBy: tickets
             joinColumn:
-                name: id_status_ticket
+                name: status_ticket_id
                 referencedColumName: id
         userCreator:
             targetEntity:  Application\Sonata\UserBundle\Entity\User
