@@ -16,6 +16,8 @@ return array(
     'PhpCollection' => array($vendorDir . '/phpcollection/phpcollection/src'),
     'Nelmio\\ApiDocBundle' => array($vendorDir . '/nelmio/api-doc-bundle'),
     'Negotiation' => array($vendorDir . '/willdurand/negotiation/src'),
+    'Mopa\\Bundle\\BootstrapBundle\\' => array($vendorDir . '/mopa/bootstrap-bundle'),
+    'Mopa\\Bridge\\Composer' => array($vendorDir . '/mopa/composer-bridge/src'),
     'Michelf' => array($vendorDir . '/michelf/php-markdown'),
     'Metadata\\' => array($vendorDir . '/jms/metadata/src'),
     'Knp\\Menu\\' => array($vendorDir . '/knplabs/knp-menu/src'),

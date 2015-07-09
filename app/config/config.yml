@@ -7,6 +7,7 @@ imports:
  #   - { resource: bundles/config/sonata_block.yml }
  #   - { resource: bundles/config/fos_user.yml }
     - { resource: bundles/config/knp_menu.yml }
+    - { resource: bundles/config/mopa_bootstrap.yml }
  #   - { resource: bundles/config/sonata_admin.yml }
  #   - { resource: bundles/sonata_cache.yml }
  #   - { resource: bundles/config/sonata_core.yml }

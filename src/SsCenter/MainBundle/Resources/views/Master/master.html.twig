@@ -52,7 +52,10 @@
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            {#{ mopa_bootstrap_menu('MainBundle:Builder:mainMenu') }#}
+            {#{ knp_menu_render('SsCenterMainBundle:Builder:mainMenu') }#}
+              {{ mopa_bootstrap_menu('SsCenterMainBundle:Builder:mainMenu') }}
+            
+              
             
             <!-- Links menu right -->
             <ul class="nav navbar-nav navbar-right">

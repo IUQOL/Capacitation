@@ -24,7 +24,9 @@
         "jms/security-extra-bundle": "1.5.1",
         "friendsofsymfony/jsrouting-bundle": "dev-master",
         "sonata-project/user-bundle": "* 2.2.4",
-        "sonata-project/doctrine-orm-admin-bundle": "2.3.2"
+        "sonata-project/doctrine-orm-admin-bundle": "2.3.2",
+        "mopa/bootstrap-bundle": "v3.0.0-beta4",
+        "twbs/bootstrap": "v3.3.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

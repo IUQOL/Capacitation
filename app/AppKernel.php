@@ -22,7 +22,7 @@ class AppKernel extends Kernel
             //Bundles de terceros
             
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-            
+             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
             //BUNDLES DE SONATA
 //            new Sonata\CoreBundle\SonataCoreBundle(),
 //            new Sonata\BlockBundle\SonataBlockBundle(),
