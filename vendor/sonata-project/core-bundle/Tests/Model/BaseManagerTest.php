@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of the Sonata package.
  *
@@ -8,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 
 namespace Sonata\CoreBundle\Tests\Model;
 
@@ -23,7 +23,7 @@ class ManagerTest extends BaseManager
      */
     public function getConnection()
     {
-        return;
+        return null;
     }
 
     /**
@@ -36,8 +36,9 @@ class ManagerTest extends BaseManager
 }
 
 /**
- * Class BaseManagerTest.
+ * Class BaseManagerTest
  *
+ * @package Sonata\CoreBundle\Tests\Model
  *
  * @author Hugo Briand <briand@ekino.com>
  */
@@ -49,7 +50,7 @@ class BaseManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCheckObject()
     {
-        $manager = new ManagerTest('class', $this->getMock('Doctrine\Common\Persistence\ManagerRegistry'));
+        $manager = new ManagerTest("class", $this->getMock('Doctrine\Common\Persistence\ManagerRegistry'));
 
         $manager->publicCheckObject(new \DateTime());
     }

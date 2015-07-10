@@ -49,16 +49,16 @@ SsCenter\MainBundle\Entity\Ticket:
             joinColumn:
                 name: status_ticket_id
                 referencedColumName: id
-#        userCreator:
-#            targetEntity:  Application\Sonata\UserBundle\Entity\User
-#            joinColumn: 
-#                name: id_user_creator
-#                referencedColumnName: id
-#        userAssigned:
-#            targetEntity:  Application\Sonata\UserBundle\Entity\User
-#            joinColumn:
-#                name: id_user_assigned
-#                referencedColumnName: id
+        userCreator:
+            targetEntity:  Application\Sonata\UserBundle\Entity\User
+            joinColumn: 
+                name: id_user_creator
+                referencedColumnName: id
+        userAssigned:
+            targetEntity:  Application\Sonata\UserBundle\Entity\User
+            joinColumn:
+                name: id_user_assigned
+                referencedColumnName: id
     manyToMany:
         reports:
             targetEntity: SsCenter\MainBundle\Entity\Report

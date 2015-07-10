@@ -5,4 +5,9 @@ services:
     main.math_basics:
         class: %math.classname%
         arguments: [%main.parameters%]
-        
+
+    ss_center_main.admin.ticket_type:
+        class: SsCenter\MainBundle\Admin\TicketTypeAdmin
+        arguments: [~, SsCenter\MainBundle\Entity\TicketType, SsCenterMainBundle:TicketTypeAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: CONFIGURACION, label: 'Tipo de tiquete'}

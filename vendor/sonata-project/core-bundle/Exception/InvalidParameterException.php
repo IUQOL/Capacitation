@@ -13,4 +13,5 @@ namespace Sonata\CoreBundle\Exception;
 
 class InvalidParameterException extends \RuntimeException
 {
+
 }

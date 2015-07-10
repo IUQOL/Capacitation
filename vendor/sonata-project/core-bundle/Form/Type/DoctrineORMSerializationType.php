@@ -13,16 +13,16 @@
 namespace Sonata\CoreBundle\Form\Type;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Metadata\MetadataFactoryInterface;
-use Sonata\CoreBundle\Form\EventListener\FixCheckboxDataListener;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+use Metadata\MetadataFactoryInterface;
+
 /**
- * Class DoctrineORMSerializationType.
+ * Class DoctrineORMSerializationType
  *
  * This is a doctrine serialization form type that generates a form type from class serialization metadata
  * and doctrine metadata
@@ -52,12 +52,7 @@ class DoctrineORMSerializationType extends AbstractType
     protected $group;
 
     /**
-     * @var bool
-     */
-    protected $identifierOverwrite;
-
-    /**
-     * Constructor.
+     * Constructor
      *
      * @param MetadataFactoryInterface $metadataFactory Serializer metadata factory
      * @param ManagerRegistry          $registry        Doctrine registry
@@ -65,14 +60,13 @@ class DoctrineORMSerializationType extends AbstractType
      * @param string                   $class           Data class name
      * @param string                   $group           Serialization group name
      */
-    public function __construct(MetadataFactoryInterface $metadataFactory, ManagerRegistry $registry, $name, $class, $group, $identifierOverwrite = false)
+    public function __construct(MetadataFactoryInterface $metadataFactory, ManagerRegistry $registry, $name, $class, $group)
     {
         $this->metadataFactory = $metadataFactory;
         $this->registry = $registry;
         $this->name  = $name;
         $this->class = $class;
         $this->group = $group;
-        $this->identifierOverwrite = $identifierOverwrite;
     }
 
     /**
@@ -88,7 +82,7 @@ class DoctrineORMSerializationType extends AbstractType
         foreach ($serializerMetadata->propertyMetadata as $propertyMetadata) {
             $name = $propertyMetadata->name;
 
-            if (in_array($name, $doctrineMetadata->getIdentifierFieldNames()) && !$this->identifierOverwrite) {
+            if (in_array($name, $doctrineMetadata->getIdentifierFieldNames())) {
                 continue;
             }
 
@@ -103,12 +97,12 @@ class DoctrineORMSerializationType extends AbstractType
                 $fieldMetadata = $doctrineMetadata->fieldMappings[$name];
                 $type = isset($fieldMetadata['type']) ? $fieldMetadata['type'] : null;
                 $nullable = isset($fieldMetadata['nullable']) ? $fieldMetadata['nullable'] : false;
-            } elseif (isset($doctrineMetadata->associationMappings[$name])) {
+            } else if (isset($doctrineMetadata->associationMappings[$name])) {
                 $associationMetadata = $doctrineMetadata->associationMappings[$name];
 
                 if (isset($associationMetadata['joinColumns']['nullable'])) {
                     $nullable = $associationMetadata['joinColumns']['nullable'];
-                } elseif (isset($associationMetadata['inverseJoinColumns']['nullable'])) {
+                } else if (isset($associationMetadata['inverseJoinColumns']['nullable'])) {
                     $nullable = $associationMetadata['inverseJoinColumns']['nullable'];
                 }
             }
@@ -116,12 +110,6 @@ class DoctrineORMSerializationType extends AbstractType
             switch ($type) {
                 case 'datetime':
                     $builder->add($name, $type, array('required' => !$nullable, 'widget' => 'single_text'));
-                    break;
-
-                case 'boolean':
-                    $childBuilder = $builder->create($name, null, array('required' => !$nullable));
-                    $childBuilder->addEventSubscriber(new FixCheckboxDataListener());
-                    $builder->add($childBuilder);
                     break;
 
                 default:
@@ -141,21 +129,11 @@ class DoctrineORMSerializationType extends AbstractType
 
     /**
      * {@inheritdoc}
-     *
-     * @todo Remove it when bumping requirements to SF 2.7+
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $this->configureOptions($resolver);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
         $resolver->setDefaults(array(
-            'data_class' => $this->class,
+            'data_class' => $this->class
         ));
     }
 }

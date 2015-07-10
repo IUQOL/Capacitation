@@ -195,8 +195,6 @@ class ParamFetcher implements ParamFetcherInterface
             );
         }
 
-        $this->checkNotIncompatibleParams($config);
-
         if (null === $config->requirements || ($param === $default && null !== $default)) {
             return $param;
         }
@@ -210,8 +208,10 @@ class ParamFetcher implements ParamFetcherInterface
                         sprintf("%s parameter is an array", $paramType)
                     );
                 }
+
                 return $default;
             }
+
             $constraint = new Regex(array(
                 'pattern' => '#^'.$config->requirements.'$#xsu',
                 'message' => sprintf(
@@ -221,15 +221,10 @@ class ParamFetcher implements ParamFetcherInterface
                     $config->requirements
                 ),
             ));
-        } elseif (is_array($constraint) && isset($constraint["rule"]) && $constraint["error_message"]) {
-            $constraint = new Regex(array(
-                'pattern' => '#^'.$config->requirements["rule"].'$#xsu',
-                'message' => $config->requirements["error_message"]
-            ));
-        }
 
-        if (false === $config->allowBlank) {
-            $constraint = array(new NotBlank(), $constraint);
+            if (false === $config->allowBlank) {
+                $constraint = array(new NotBlank(), $constraint);
+            }
         }
 
         if ($this->validator instanceof ValidatorInterface) {
@@ -240,13 +235,9 @@ class ParamFetcher implements ParamFetcherInterface
 
         if (0 !== count($errors)) {
             if ($strict) {
-                if (is_array($config->requirements) && isset($config->requirements["error_message"])) {
-                    $errorMessage = $config->requirements["error_message"];
-                } else {
-                    $errorMessage = $this->violationFormatter->formatList($config, $errors);
-                }
-                throw new BadRequestHttpException($errorMessage);
+                throw new BadRequestHttpException($this->violationFormatter->formatList($config, $errors));
             }
+
             return null === $default ? '' : $default;
         }
 
@@ -289,38 +280,5 @@ class ParamFetcher implements ParamFetcherInterface
             new \ReflectionClass(ClassUtils::getClass($this->controller[0])),
             $this->controller[1]
         );
-    }
-
-    /**
-     * Check if current param is not in conflict with other parameters
-     * according to the "incompatibles" field
-     *
-     * @param Param $config the configuration for the param fetcher
-     *
-     * @throws BadRequestHttpException
-     */
-    private function checkNotIncompatibleParams(Param $config)
-    {
-
-        if (!$config instanceof QueryParam) {
-            return;
-        };
-
-        foreach ($config->incompatibles as $incompatibleParam) {
-            $isIncompatiblePresent = $this->request->query->get(
-                $incompatibleParam,
-                null
-            ) !== null;
-
-            if ($isIncompatiblePresent) {
-                $exceptionMessage = sprintf(
-                    "'%s' param is incompatible with %s param",
-                    $config->name,
-                    $incompatibleParam
-                );
-
-                throw new BadRequestHttpException($exceptionMessage);
-            }
-        }
     }
 }

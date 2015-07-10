@@ -52,67 +52,6 @@ which adds several convenience methods:
         }
     }
 
-.. versionadded:: 1.6
-  The ``setTemplateData`` method was added in 1.6.
-
-If you need to pass more data in template, not for serialization, you can use ``setTemplateData`` method:
-
-.. code-block:: php
-
-    <?php
-
-    use FOS\RestBundle\Controller\FOSRestController;
-
-    class UsersController extends FOSRestController
-    {
-        public function getCategoryAction($categorySlug)
-        {
-            $category = $this->get('category_manager')->getBySlug($categorySlug);
-            $products = ...; // get data, in this case list of products.
-
-            $templateData = array('category' => $category);
-
-            $view = $this->view($products, 200)
-                ->setTemplate("MyBundle:Category:show.html.twig")
-                ->setTemplateVar('products')
-                ->setTemplateData($templateData)
-            ;
-
-            return $this->handleView($view);
-        }
-    }
-
-or it is possible to use lazy-loading:
-
-.. code-block:: php
-
-    <?php
-
-    use FOS\RestBundle\Controller\FOSRestController;
-
-    class UsersController extends FOSRestController
-    {
-        public function getProductsAction($categorySlug)
-        {
-            $products = ...; // get data, in this case list of products.
-            $categoryManager = $this->get('category_manager');
-
-            $view = $this->view($products, 200)
-                ->setTemplate("MyBundle:Category:show.html.twig")
-                ->setTemplateVar('products')
-                ->setTemplateData(function (ViewHandlerInterface $viewHandler, ViewInterface $view) use ($categoryManager, $categorySlug) {
-                    $category = $categoryManager->getBySlug($categorySlug);
-                    
-                    return array(
-                        'category' => $category,
-                    );
-                })
-            ;
-
-            return $this->handleView($view);
-        }
-    }
-
 To simplify this even more: If you rely on the ``ViewResponseListener`` in
 combination with SensioFrameworkExtraBundle you can even omit the calls to
 ``$this->handleView($view)`` and directly return the view objects. See chapter
@@ -136,7 +75,6 @@ There are several more methods on the ``View`` class, here is a list of all
 the important ones for configuring the view:
 
 * ``setData($data)`` - Set the object graph or list of objects to serialize.
-* ``setTemplateData($templateData)`` - Set the template data array or anonymous function. Closure should return array.
 * ``setHeader($name, $value)`` - Set a header to put on the HTTP response.
 * ``setHeaders(array $headers)`` - Set multiple headers to put on the HTTP response.
 * ``setSerializationContext($context)`` - Set the serialization context to use.
@@ -158,12 +96,12 @@ See `this example code`_ for more details.
 Forms and Views
 ---------------
 
-Symfony Forms have special handling inside the view layer. Whenever you:
+Symfony Forms have special handling inside the view layer. Whenever you
 
-- return a Form from the controller.
-- Set the form as only data of the view.
-- return an array with a 'form' key, containing a form.
-- return a form with validation errors.
+- return a Form from the controller
+- Set the form as only data of the view
+- return an array with a 'form' key, containing a form
+- return a form with validation errors
 
 Then:
 
@@ -173,7 +111,7 @@ Then:
   is called automatically.
 - ``$form->getData()`` is passed into the view as template as ``'data'`` if the
   form is the only view data.
-- An invalid form will be wrapped into an exception.
+- An invalid form will be wrapped into an exception
 
 A response example of an invalid form:
 
@@ -204,6 +142,7 @@ Implement the ``ExceptionWrapperHandlerInterface``:
 
     class MyExceptionWrapperHandler implements ExceptionWrapperHandlerInterface
     {
+
         /**
          * {@inheritdoc}
          */
@@ -213,7 +152,7 @@ Implement the ``ExceptionWrapperHandlerInterface``:
         }
     }
 
-In the ``wrap`` method return any object or array.
+In the ``wrap`` method return any object or array
 
 Update the ``config.yml``:
 
@@ -221,81 +160,9 @@ Update the ``config.yml``:
 
     fos_rest:
         view:
-            # ...
+            ...
             exception_wrapper_handler: My\Bundle\Handler\MyExceptionWrapperHandler
-            # ...
-
-Data Transformation
--------------------
-
-As we have seen in the section before, the FOSRestBundle relies on the form
-component (http://symfony.com/doc/current/components/form/introduction.html) to
-handle submission of view data. In fact, the form builder
-(http://symfony.com/doc/current/book/forms.html#building-the-form) basically
-defines the structure of the expected view data which shall be used for further
-processing - which most of the time relates to a PUT or POST request. This
-brings a lot of flexibility and allows to exactly define the structure of data
-to be received by the api.
-
-Most of the time the requirements regarding a PUT/POST request are, in
-terms of data structure, fairly simple. The payload within a PUT or POST request
-oftentimes will have the exact same structure as received by a previous GET
-request, but only with modified value fields. Thus, the fields to be defined
-within the form builder process will be the same as the fields marked to be
-serialized within an entity.
-
-However, there is a common use case where straightforward updating of data,
-received by a serialized object (GET request), will not work out of the box using
-the given implementation of the form component: Simple assignment of a reference
-using an object.
-
-Let's take an entity ``Task`` that holds a reference to a ``Person`` as
-an example. The serialized Task object will looks as follows:
-
-.. code-block:: json
-    
-    {"task_form":{"name":"Task1", "person":{"id":1, "name":"Fabien"}}}
-
-In a traditional Symfony2 application we simply define the property of the
-related class and it would perfectly assign the person to our task - in this
-case based on the id:
-
-.. code-block:: php
-    
-    $builder
-        ->add('name', 'text')
-        ...
-        ->add('person', 'entity', array(
-            'class' => 'Acme\DemoBundle\Entity\Person',
-            'property' => 'id'
-        ))
-
-Unfortunately, this form builder does not accept our serialized object as it is
-- even though it contains the necessary id. In fact, the object would have to
-contain the id directly assigned to the person field to be be accepted by the
-form validtion process:
-
-.. code-block:: json
-    
-    {"task_form":{"name":"Task1", "person":1}}
-
-Well, this is somewhat useless since we not only want to display the name of the
-person but also do not want to do some client side trick to extract the id
-before updating the data, right? Instead, we rather update the data the same way
-as we received it in our GET request and thus, extend the form builder with a
-data transformer. Furtunately the FOSRestBundle comes with an
-``EntityToIdObjectTransformer``, which can be applied to any form builder:
-
-.. code-block:: php
-    
-    $personTransformer = new EntityToIdObjectTransformer($this->om, "AcmeDemoBundle:Person");
-    $builder
-        ->add('name', 'text')
-        ...
-        ->add($builder->create('person', 'text')->addModelTransformer($personTransformer))
-
-This way, the data structure remains untouched and the person can be assigned to
-the task without any client modifications.
+            ...
 
 Configuration
 -------------
@@ -380,35 +247,29 @@ Here is an example using a closure registered inside a Controller action:
         {
             $view = View::create();
 
-            // ...
+            ...
 
             $handler = $this->get('fos_rest.view_handler');
             if (!$handler->isFormatTemplating($view->getFormat())) {
-                $templatingHandler = function ($handler, $view, $request) {
-                    // if a template is set, render it using the 'params'
-                    // and place the content into the data
+                $templatingHandler = function($handler, $view, $request) {
+                    // if a template is set, render it using the 'params' and place the content into the data
                     if ($view->getTemplate()) {
                         $data = $view->getData();
-                        
                         if (empty($data['params'])) {
                             $params = array();
                         } else {
                             $params = $data['params'];
                             unset($data['params']);
                         }
-                        
                         $view->setData($params);
                         $data['html'] = $handler->renderTemplate($view, 'html');
 
                         $view->setData($data);
                     }
-                    
                     return $handler->createResponse($view, $request, $format);
                 };
-                
                 $handler->registerHandler($view->getFormat(), $templatingHandler);
             }
-            
             return $handler->handle($view);
         }
     }

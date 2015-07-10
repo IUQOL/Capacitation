@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of the Sonata project.
  *
@@ -10,6 +9,7 @@
  */
 
 namespace Sonata\CoreBundle\Tests\Resources;
+
 
 use Sonata\CoreBundle\Test\XliffValidatorTestCase;
 

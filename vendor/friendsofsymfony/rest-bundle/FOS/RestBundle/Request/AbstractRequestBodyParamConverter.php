@@ -118,11 +118,11 @@ abstract class AbstractRequestBodyParamConverter implements ParamConverterInterf
                 $context
             );
         } catch (UnsupportedFormatException $e) {
-            throw new UnsupportedMediaTypeHttpException($e->getMessage(), $e);
+            throw new UnsupportedMediaTypeHttpException($e->getMessage());
         } catch (JMSSerializerException $e) {
-            throw new BadRequestHttpException($e->getMessage(), $e);
+            throw new BadRequestHttpException($e->getMessage());
         } catch (SymfonySerializerException $e) {
-            throw new BadRequestHttpException($e->getMessage(), $e);
+            throw new BadRequestHttpException($e->getMessage());
         }
 
         $request->attributes->set($configuration->getName(), $object);

@@ -1,91 +1,86 @@
 get_users:
-  path:      /users.{_format}
+  pattern:      /users.{_format}
   controller:   ::getUsersAction
-  methods: [GET]
+  requirements: {_method: GET}
 
 get_user:
-  path:      /users/{slug}.{_format}
+  pattern:      /users/{slug}.{_format}
   controller:   ::getUserAction
-  requirements: {slug: '[a-z]+'}
-  methods: [GET]
+  requirements: {_method: GET, slug: '[a-z]+'}
 
 patch_users:
-  path:      /users.{_format}
+  pattern:      /users.{_format}
   controller:   ::patchUsersAction
-  methods: [PATCH]
+  requirements: {_method: PATCH}
 
 patch_user:
-  path:      /users/{slug}.{_format}
+  pattern:      /users/{slug}.{_format}
   controller:   ::patchUserAction
-  requirements: {slug: '[a-z]+'}
-  methods: [PATCH]
+  requirements: {_method: PATCH, slug: '[a-z]+'}
 
 get_user_comment:
-  path:      /users/{slug}/comments/{id}.{_format}
+  pattern:      /users/{slug}/comments/{id}.{_format}
   controller:   ::getUserCommentAction
-  requirements: {slug: '[a-z]+', id: '\d+'}
-  methods: [GET]
+  requirements: {_method: GET, slug: '[a-z]+', id: '\d+'}
 
 rate_user:
-  path:      /users/{slug}/rate.{_format}
+  pattern:      /users/{slug}/rate.{_format}
   controller:   ::rateUserAction
-  requirements: {slug: '[a-z]+'}
-  methods: [POST]
+  requirements: {_method: POST, slug: '[a-z]+'}
 
 rate_user_comment:
-  path:      /users/{slug}/rate_comment/{id}.{_format}
+  pattern:      /users/{slug}/rate_comment/{id}.{_format}
   controller:   ::rateUserCommentAction
-  requirements: {slug: '[a-z]+', id: '\d+'}
-  methods: [PATCH, POST]
+  requirements: {_method: PATCH, slug: '[a-z]+', id: '\d+'}
 
 bget_user:
-  path:      /users/{slug}/bget.{_format}
+  pattern:      /users/{slug}/bget.{_format}
   controller:   ::bgetUserAction
-  methods: [GET]
+  requirements: {_method: GET}
 
 bpost_user:
-  path:      /users/{slug}/bpost.{_format}
+  pattern:      /users/{slug}/bpost.{_format}
   controller:   ::bpostUserAction
-  methods: [POST]
+  requirements: {_method: POST}
 
 bput_user:
-  path:      /users/{slug}/bput.{_format}
+  pattern:      /users/{slug}/bput.{_format}
   controller:   ::bputUserAction
-  methods: [PUT]
+  requirements: {_method: PUT}
 
 bdel_user:
-  path:      /users/{slug}/bdel.{_format}
+  pattern:      /users/{slug}/bdel.{_format}
   controller:   ::bdelUserAction
-  methods: [DELETE]
+  requirements: {_method: DELETE}
 
 bhead_user:
-  path:      /users/{slug}/bhead.{_format}
+  pattern:      /users/{slug}/bhead.{_format}
   controller:   ::bheadUserAction
-  methods: [HEAD]
+  requirements: {_method: HEAD}
 
 conditional_user:
-  path:      /users/conditional.{_format}
+  pattern:      /users/conditional.{_format}
   controller:   ::conditionalUserAction
-  methods: [GET]
+  requirements: {_method: GET}
   condition: "context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'"
 
 
 multipleget_users_a_get_method:
-  path:      /users2.{_format}
+  pattern:      /users2.{_format}
   controller:   ::multiplegetUsersAction
-  methods: [GET]
+  requirements: {_method: GET}
   condition: "context.getMethod() in ['GET'] and request.headers.get('User-Agent') matches '/firefox/i'"
 multipleget_users_an_other_get_method:
-  path:      /users3.{_format}
+  pattern:      /users3.{_format}
   controller:   ::multiplegetUsersAction
-  methods: [GET]
+  requirements: {_method: GET}
 multipleget_users_a_post_method:
-  path:      /users4.{_format}
+  pattern:      /users4.{_format}
   controller:   ::multiplegetUsersAction
-  methods: [POST]
+  requirements: {_method: POST}
   condition: "context.getMethod() in ['POST'] and request.headers.get('User-Agent') matches '/firefox/i'"
 multipleget_users_a_link_method:
-  path:      /users1.{_format}
+  pattern:      /users1.{_format}
   controller:   ::multiplegetUsersAction
-  methods: [LINK]
+  requirements: {_method: LINK}
   condition: "context.getMethod() in ['LINK'] and request.headers.get('User-Agent') matches '/firefox/i'"

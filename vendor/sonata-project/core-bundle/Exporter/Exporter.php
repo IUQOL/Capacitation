@@ -12,11 +12,12 @@
 namespace Sonata\CoreBundle\Exporter;
 
 use Exporter\Source\SourceIteratorInterface;
-use Exporter\Writer\CsvWriter;
-use Exporter\Writer\JsonWriter;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+
 use Exporter\Writer\XlsWriter;
 use Exporter\Writer\XmlWriter;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use Exporter\Writer\JsonWriter;
+use Exporter\Writer\CsvWriter;
 
 class Exporter
 {
@@ -45,21 +46,21 @@ class Exporter
                 $contentType = 'application/json';
                 break;
             case 'csv':
-                $writer      = new CsvWriter('php://output', ',', '"', '', true, true);
+                $writer      = new CsvWriter('php://output', ',', '"', "", true, true);
                 $contentType = 'text/csv';
                 break;
             default:
                 throw new \RuntimeException('Invalid format');
         }
 
-        $callback = function () use ($source, $writer) {
+        $callback = function() use ($source, $writer) {
             $handler = \Exporter\Handler::create($source, $writer);
             $handler->export();
         };
 
         return new StreamedResponse($callback, 200, array(
             'Content-Type'        => $contentType,
-            'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
+            'Content-Disposition' => sprintf('attachment; filename=%s', $filename)
         ));
     }
 }

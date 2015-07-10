@@ -62,10 +62,7 @@ class RestRouteCollection extends RouteCollection
     public function setDefaultFormat($format)
     {
         foreach (parent::all() as $route) {
-            // Set default format only if not set already (could be defined in annotation)
-            if (!$route->getDefault('_format')) {
-                $route->setDefault('_format', $format);
-            }
+            $route->setDefault('_format', $format);
         }
     }
 

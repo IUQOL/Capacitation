@@ -12,7 +12,8 @@
 namespace Sonata\CoreBundle\Tests\Form\Type;
 
 use Sonata\CoreBundle\Form\Type\DateRangeType;
-use Symfony\Component\Form\Test\TypeTestCase;
+
+use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DateRangeTypeTest extends TypeTestCase
@@ -28,12 +29,6 @@ class DateRangeTypeTest extends TypeTestCase
 
         $options = $resolver->resolve();
 
-        $this->assertEquals(
-            array(
-                'field_options'       => array(),
-                'field_options_start' => array(),
-                'field_options_end'   => array(),
-                'field_type'          => 'date',
-            ), $options);
+        $this->assertEquals(array('field_options' => array(), 'field_type' => 'date'), $options);
     }
 }

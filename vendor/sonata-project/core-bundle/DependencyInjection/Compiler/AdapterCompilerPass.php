@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of the Sonata package.
  *
@@ -9,6 +8,7 @@
  * file that was distributed with this source code.
  */
 
+
 namespace Sonata\CoreBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class StatusRendererCompilerPass.
+ * Class StatusRendererCompilerPass
  *
  *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
@@ -28,6 +28,7 @@ class AdapterCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
+
         $definition = $container->getDefinition('sonata.core.model.adapter.chain');
 
         if ($container->has('doctrine')) {

@@ -181,32 +181,31 @@ class RestActionReader
 
         // generated parameters
         $routeName    = strtolower($routeName);
-        $path         = implode('/', $urlParts);
+        $pattern      = implode('/', $urlParts);
         $defaults     = array('_controller' => $method->getName());
-        $requirements = array();
+        $requirements = array('_method' => strtoupper($httpMethod));
         $options      = array();
         $host         = '';
+        $schemes      = array();
         $condition    = null;
 
         $annotations = $this->readRouteAnnotation($method);
         if ($annotations) {
             foreach ($annotations as $annotation) {
 
-                $path         = implode('/', $urlParts);
+                $pattern      = implode('/', $urlParts);
                 $defaults     = array('_controller' => $method->getName());
-                $requirements = array();
+                $requirements = array('_method' => strtoupper($httpMethod));
                 $options      = array();
-                $methods      = explode('|', $httpMethod);
                 $condition    = null;
 
                 $annoRequirements = $annotation->getRequirements();
-                $annoMethods = $annotation->getMethods();
 
-                if (!empty($annoMethods)) {
-                    $methods = $annoMethods;
+                if (!isset($annoRequirements['_method'])) {
+                    $annoRequirements['_method'] = $requirements['_method'];
                 }
 
-                $path         = $annotation->getPath() !== null ? $this->routePrefix.$annotation->getPath() : $path;
+                $pattern      = $annotation->getPath() !== null ? $this->routePrefix.$annotation->getPath() : $pattern;
                 $requirements = array_merge($requirements, $annoRequirements);
                 $options      = array_merge($options, $annotation->getOptions());
                 $defaults     = array_merge($defaults, $annotation->getDefaults());
@@ -218,7 +217,7 @@ class RestActionReader
                 }
 
                 if ($this->includeFormat === true) {
-                    $path .= '.{_format}';
+                    $pattern .= '.{_format}';
 
                     if (!isset($requirements['_format']) && !empty($this->formats)) {
                         $requirements['_format'] = implode('|', array_keys($this->formats));
@@ -226,25 +225,22 @@ class RestActionReader
                 }
                 // add route to collection
                 $route = new Route(
-                    $path, $defaults, $requirements, $options, $host, $schemes, $methods, $condition
+                    $pattern, $defaults, $requirements, $options, $host, $schemes, null, $condition
                 );
                 $this->addRoute($collection, $routeName, $route, $isCollection, $isInflectable, $annotation);
             }
 
         } else {
             if ($this->includeFormat === true) {
-                $path .= '.{_format}';
+                $pattern .= '.{_format}';
 
                 if (!isset($requirements['_format']) && !empty($this->formats)) {
                     $requirements['_format'] = implode('|', array_keys($this->formats));
                 }
             }
-
-            $methods = explode('|', strtoupper($httpMethod));
-
             // add route to collection
             $route = new Route(
-                $path, $defaults, $requirements, $options, $host, array(), $methods, $condition
+                $pattern, $defaults, $requirements, $options, $host, $schemes, null, $condition
             );
             $this->addRoute($collection, $routeName, $route, $isCollection, $isInflectable);
         }

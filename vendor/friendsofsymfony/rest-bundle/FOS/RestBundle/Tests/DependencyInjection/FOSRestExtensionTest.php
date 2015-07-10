@@ -167,81 +167,6 @@ class FOSRestExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->container->hasDefinition('fos_rest.format_listener'));
     }
 
-    public function testLoadFormatListenerWithSingleRule()
-    {
-        $config = array(
-            'fos_rest' => array('format_listener' => array(
-                'rules' => array('path' => '/'),
-            )),
-        );
-        $this->extension->load($config, $this->container);
-
-        $this->assertTrue($this->container->hasDefinition('fos_rest.format_listener'));
-    }
-
-    public function testLoadParamFetcherListener()
-    {
-        $config = array(
-            'fos_rest' => array('param_fetcher_listener' => true),
-        );
-        $this->extension->load($config, $this->container);
-
-        $this->assertTrue($this->container->hasDefinition('fos_rest.param_fetcher_listener'));
-        $this->assertFalse($this->container->getParameter('fos_rest.param_fetcher_listener.set_params_as_attributes'));
-    }
-
-    public function testLoadParamFetcherListenerForce()
-    {
-        $config = array(
-            'fos_rest' => array('param_fetcher_listener' => 'force'),
-        );
-        $this->extension->load($config, $this->container);
-
-        $this->assertTrue($this->container->hasDefinition('fos_rest.param_fetcher_listener'));
-        $this->assertTrue($this->container->getParameter('fos_rest.param_fetcher_listener.set_params_as_attributes'));
-    }
-
-    public function testLoadFormatListenerWithMultipleRule()
-    {
-        $config = array(
-            'fos_rest' => array('format_listener' => array(
-                'rules' => array(
-                    array('path' => '/foo'),
-                    array('path' => '/'),
-                )
-            )),
-        );
-        $this->extension->load($config, $this->container);
-
-        $this->assertTrue($this->container->hasDefinition('fos_rest.format_listener'));
-    }
-
-    public function testLoadFormatListenerMediaType()
-    {
-        $config = array(
-            'fos_rest' => array('format_listener' => array(
-                'rules' => array('path' => '/'),
-                'media_type' => true,
-            )),
-        );
-        $this->extension->load($config, $this->container);
-
-        $this->assertTrue($this->container->hasDefinition('fos_rest.version_listener'));
-    }
-
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
-    public function testLoadFormatListenerMediaTypeNoRules()
-    {
-        $config = array(
-            'fos_rest' => array('format_listener' => array(
-                'media_type' => true,
-            )),
-        );
-        $this->extension->load($config, $this->container);
-    }
-
     public function testLoadServicesWithDefaults()
     {
         $this->extension->load(array(), $this->container);
@@ -270,28 +195,6 @@ class FOSRestExtensionTest extends \PHPUnit_Framework_TestCase
         $this->extension->load($config, $this->container);
 
         $this->assertFalse($this->container->hasDefinition('fos_rest.view_response_listener'));
-    }
-
-    public function testLoadViewResponseListener()
-    {
-        $config = array(
-            'fos_rest' => array('view' => array('view_response_listener' => true)),
-        );
-        $this->extension->load($config, $this->container);
-
-        $this->assertTrue($this->container->hasDefinition('fos_rest.view_response_listener'));
-        $this->assertFalse($this->container->getParameter('fos_rest.view_response_listener.force_view'));
-    }
-
-    public function testLoadViewResponseListenerForce()
-    {
-        $config = array(
-            'fos_rest' => array('view' => array('view_response_listener' => 'force')),
-        );
-        $this->extension->load($config, $this->container);
-
-        $this->assertTrue($this->container->hasDefinition('fos_rest.view_response_listener'));
-        $this->assertTrue($this->container->getParameter('fos_rest.view_response_listener.force_view'));
     }
 
     public function testForceEmptyContentDefault()
@@ -665,16 +568,6 @@ class FOSRestExtensionTest extends \PHPUnit_Framework_TestCase
 
         $exceptionWrapperHandler = $this->container->getDefinition('fos_rest.view.exception_wrapper_handler');
         $this->assertEquals('%fos_rest.view.exception_wrapper_handler%', $exceptionWrapperHandler->getClass());
-    }
-
-    public function testSerializerExceptionNormalizer()
-    {
-        $this->extension->load(array('fos_rest' => array('view' => true)), $this->container);
-
-        $this->assertTrue($this->container->has('fos_rest.serializer.exception_wrapper_normalizer'));
-
-        $definition = $this->container->getDefinition('fos_rest.serializer.exception_wrapper_normalizer');
-        $this->assertEquals('FOS\RestBundle\Serializer\ExceptionWrapperNormalizer', $definition->getClass());
     }
 
     /**

@@ -8,6 +8,19 @@ use Symfony\Component\HttpFoundation\Request;
 use SsCenter\MainBundle\Form\Type\SsCenterType;
 use SsCenter\MainBundle\Classes\SsCenter;
 use SsCenter\MainBundle\Entity\Item;
+use SsCenter\MainBundle\Entity\Ticket;
+use SsCenter\MainBundle\Entity\Report;
+
+
+
+
+
+
+
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+use Sonata\UserBundle\Model\UserInterface;
+
 
 class DefaultController extends Controller
 {
@@ -17,7 +30,38 @@ class DefaultController extends Controller
      */
     public function mainAction()
     {
+        $em = $this->getDoctrine()->getManager();
+        
+         $now = new \DateTime();
+        $user = $this->get('security.context')->getToken()->getUser();
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
+        
+        $ticket = new Ticket();
+        $ticket->setCode('A00431');
+        $ticket->setCreationDate($now);
+        $ticket->setTitle('Esto es una prueba');
+        $ticket->setDescription('Desc');
+        
+        for( $i=0; $i<5;$i++)
+        {
+           $report = new Report();
+           $report->setDate($now);
+           $report->setNotes('Probando'.$i);
+           $report->setUserReport($user);
+           $em->persist($report);
+          
+           $ticket->addReport($report);
+        }
+        
+        
+        
+        $em->persist($ticket);
+        $em->flush();
+        
         return new Response($this->displayMain());
+               
     }
     
     
@@ -25,8 +69,17 @@ class DefaultController extends Controller
     {
       $temp = $this->get('templating');
       $result = false;
+      
+      $em = $this->getDoctrine()->getManager();
+      $report = $em->getRepository('SsCenterMainBundle:Report')->findOneBy(array('id'=> 16));
+      
+      
+      $report->setNotes('Prueba numero2');
+      
+      $em->persist($report);
+      $em->flush();
       return $temp->render('SsCenterMainBundle:Default:index.html.twig',  array
-              ('prueba' => 'VALOR1',
+              ('prueba' => var_dump($report),
                'usuario' => array ('name' => 'Luis', 'doc' => 'cc'),
                'res' => $result,
           )      );

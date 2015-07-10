@@ -3,26 +3,16 @@ Full default configuration
 
 .. code-block:: yaml
 
-    # Default configuration for extension with alias: "fos_rest"
-
     fos_rest:
         disable_csrf_role:    null
         access_denied_listener:
-            enabled:              false
-            service:              null
-            formats:
 
-                # Prototype
-                name:                 ~
+            # Prototype
+            name:                 ~
         unauthorized_challenge:  null
-        param_fetcher_listener:
-            enabled:              false
-            force:                false
-            service:              null
+        param_fetcher_listener:  false
         cache_dir:            '%kernel.cache_dir%/fos_rest'
-        allowed_methods_listener:
-            enabled:              false
-            service:              null
+        allowed_methods_listener:  false
         routing_loader:
             default_format:       null
             include_format:       true
@@ -49,12 +39,9 @@ Full default configuration
                 # Prototype
                 name:                 ~
             mime_types:
-                enabled:              false
-                service:              null
-                formats:
 
-                    # Prototype
-                    name:                 ~
+                # Prototype
+                name:                 ~
             formats:
 
                 # Prototype
@@ -63,10 +50,7 @@ Full default configuration
 
                 # Prototype
                 name:                 ~
-            view_response_listener:
-                enabled:              false
-                force:                false
-                service:              null
+            view_response_listener:  false
             failed_validation:    400
             empty_content:        204
             exception_wrapper_handler:  null
@@ -87,8 +71,6 @@ Full default configuration
                 # Prototype
                 name:                 ~
         body_listener:
-            enabled:              true
-            service:              null
             default_format:       null
             throw_exception_on_unsupported_content_type:  false
             decoders:
@@ -99,8 +81,6 @@ Full default configuration
                 service:              null
                 forms:                false
         format_listener:
-            enabled:              false
-            service:              null
             rules:
 
                 # URL path info
@@ -117,6 +97,5 @@ Full default configuration
                 exception_fallback_format:  null
                 priorities:           []
             media_type:
-                enabled:              false
-                service:              null
                 version_regex:        '/(v|version)=(?P<version>[0-9\.]+)/'
+

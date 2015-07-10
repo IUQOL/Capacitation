@@ -135,32 +135,22 @@ class BodyListenerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($normalizedData, $request->request->all());
     }
 
-    /**
-     * @dataProvider formNormalizationProvider
-     */
-    public function testOnKernelRequestNormalizationWithForms($method, $contentType, $mustBeNormalized)
+    public function testOnKernelRequestNormalizationWithForms()
     {
         $data = array('foo_bar' => 'foo_bar');
         $normalizedData = array('fooBar' => 'foo_bar');
         $decoderProvider = $this->getMock('FOS\RestBundle\Decoder\DecoderProviderInterface');
 
         $normalizer = $this->getMock('FOS\RestBundle\Normalizer\ArrayNormalizerInterface');
-
-        if ($mustBeNormalized) {
-            $normalizer
-                ->expects($this->once())
-                ->method('normalize')
-                ->with($data)
-                ->will($this->returnValue($normalizedData));
-        } else {
-            $normalizer
-                ->expects($this->never())
-                ->method('normalize');
-        }
+        $normalizer
+            ->expects($this->once())
+            ->method('normalize')
+            ->with($data)
+            ->will($this->returnValue($normalizedData));
 
         $request = new Request(array(), $data, array(), array(), array(), array(), 'foo');
-        $request->headers->set('Content-Type', $contentType);
-        $request->setMethod($method);
+        $request->headers->set('Content-Type', 'multipart/form-data');
+        $request->setMethod('POST');
 
         $event = $this->getMockBuilder('Symfony\Component\HttpKernel\Event\GetResponseEvent')
             ->disableOriginalConstructor()
@@ -173,26 +163,7 @@ class BodyListenerTest extends \PHPUnit_Framework_TestCase
         $listener = new BodyListener($decoderProvider, false, $normalizer, true);
         $listener->onKernelRequest($event);
 
-        if ($mustBeNormalized) {
-            $this->assertEquals($normalizedData, $request->request->all());
-        } else {
-            $this->assertEquals($data, $request->request->all());
-        }
-    }
-
-    public function formNormalizationProvider()
-    {
-        $cases = array();
-
-        foreach (array('POST', 'PUT', 'PATCH', 'DELETE') as $method) {
-            $cases[] = array($method, 'multipart/form-data', true);
-            $cases[] = array($method, 'multipart/form-data; boundary=AaB03x', true);
-            $cases[] = array($method, 'application/x-www-form-urlencoded', true);
-            $cases[] = array($method, 'application/x-www-form-urlencoded; charset=utf-8', true);
-            $cases[] = array($method, 'unknown', false);
-        }
-
-        return $cases;
+        $this->assertEquals($normalizedData, $request->request->all());
     }
 
     /**

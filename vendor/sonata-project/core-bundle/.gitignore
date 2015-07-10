@@ -7,8 +7,3 @@ nbproject
 coverage
 composer.lock
 /vendor
-.php_cs.cache
-
-Resources/public/vendor/ionicons/png
-Resources/public/vendor/select2-bootstrap-css/*
-!Resources/public/vendor/select2-bootstrap-css/select2-bootstrap.min.css

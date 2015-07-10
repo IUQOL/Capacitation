@@ -2,27 +2,25 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
-    - { resource: bundles/config/main.yml }
- #   - { resource: bundles/config/sonata_user.yml }
- #   - { resource: bundles/config/sonata_block.yml }
- #   - { resource: bundles/config/fos_user.yml }
-    - { resource: bundles/config/knp_menu.yml }
-    - { resource: bundles/config/mopa_bootstrap.yml }
- #   - { resource: bundles/config/sonata_admin.yml }
- #   - { resource: bundles/sonata_cache.yml }
- #   - { resource: bundles/config/sonata_core.yml }
-    - { resource: bundles/config/swiftmailer.yml }
-    
-    
-
+    - { resource: bundles/fos_user.yml }
+    - { resource: bundles/sonata_admin.yml }
+    - { resource: bundles/sonata_block.yml }
+  #  - { resource: bundles/sonata_cache.yml }
+    - { resource: bundles/sonata_core.yml }
+    - { resource: bundles/sonata_formatter.yml }
+    - { resource: bundles/sonata_user.yml }
+    - { resource: bundles/sonata_notification.yml }
+    - { resource: bundles/sonata_timeline.yml }
+    - { resource: bundles/swiftmailer.yml }
+    - { resource: bundles/mopa_bootstrap.yml }
+    - { resource: bundles/knp_menu.yml }
+    - { resource: bundles/main.yml }
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
-parameters:
-    locale: es
 
 framework:
     #esi:             ~
-    #translator:      { fallbacks: ["%locale%"] }
+    translator:      { fallbacks: ["%locale%"] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -30,7 +28,6 @@ framework:
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true }
-    #serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
         #assets_version: SomeVersionScheme
@@ -39,7 +36,11 @@ framework:
     trusted_proxies: ~
     session:
         # handler_id set to null will use default session handler from php.ini
-        handler_id:  ~
+        cookie_lifetime: 0
+        gc_maxlifetime: 1800
+        gc_probability: 1
+        gc_divisor: 1
+        
     fragments:       ~
     http_method_override: true
 
@@ -47,8 +48,10 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    
-
+    form:
+        resources:
+            - 'SonataFormatterBundle:Form:formatter.html.twig'
+            
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
@@ -65,37 +68,22 @@ assetic:
 # Doctrine Configuration
 doctrine:
     dbal:
-        default_connection: default
-        connections:
-            default:
-                driver:  %database_driver%
-                host:    %database_host%
-                port:    %database_port%
-                dbname:  %database_name%
-                user:    %database_user%
-                password: %database_password%
-                charset: UTF8
-        
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
         #   2. Uncomment database_path in parameters.yml.dist
         #   3. Uncomment next line:
         #     path:     "%database_path%"
-   #     types:
-   #             json: Sonata\Doctrine\Types\JsonType
+        types:
+            json: Sonata\Doctrine\Types\JsonType
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        #naming_strategy: doctrine.orm.naming_strategy.underscore
-        entity_managers:
-            default:
-                mappings:
-                    SsCenterMainBundle: ~
-                    #ApplicationSonataUserBundle: ~
-                    #SonataUserBundle: ~
-        
-        
-
-
-
+        auto_mapping: true

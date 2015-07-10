@@ -71,7 +71,7 @@ interface UserInterface extends AdvancedUserInterface, \Serializable
     public function getEmailCanonical();
 
     /**
-     * Sets the canonical email.
+     * Set the canonical email.
      *
      * @param string $emailCanonical
      *

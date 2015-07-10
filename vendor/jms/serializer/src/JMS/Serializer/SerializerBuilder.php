@@ -329,8 +329,6 @@ class SerializerBuilder
     public function setMetadataDriverFactory(DriverFactoryInterface $driverFactory)
     {
         $this->driverFactory = $driverFactory;
-
-        return $this;
     }
 
     public function build()

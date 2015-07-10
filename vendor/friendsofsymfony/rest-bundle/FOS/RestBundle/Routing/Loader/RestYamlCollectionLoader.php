@@ -60,7 +60,7 @@ class RestYamlCollectionLoader extends YamlFileLoader
     {
         $path = $this->locator->locate($file);
 
-        $config = Yaml::parse(file_get_contents($path));
+        $config = Yaml::parse($path);
 
         $collection = new RouteCollection();
         $collection->addResource(new FileResource($path));
@@ -92,7 +92,6 @@ class RestYamlCollectionLoader extends YamlFileLoader
                 if ($imported instanceof RestRouteCollection) {
                     $parents[]  = ($prefix ? $prefix.'/' : '').$imported->getSingularName();
                     $prefix     = null;
-                    $namePrefix = null;
 
                     $this->collectionParents[$name] = $parents;
                 }
@@ -102,10 +101,6 @@ class RestYamlCollectionLoader extends YamlFileLoader
                 $imported->addOptions($options);
 
                 $imported->addPrefix($prefix);
-
-                // Add name prefix from parent config files
-                $imported = $this->addParentNamePrefix($imported, $namePrefix);
-
                 $collection->addCollection($imported);
             } elseif (isset($config['pattern']) || isset($config['path'])) {
                 // the YamlFileLoader of the Routing component only checks for
@@ -148,30 +143,5 @@ class RestYamlCollectionLoader extends YamlFileLoader
         return is_string($resource) &&
             'yml' === pathinfo($resource, PATHINFO_EXTENSION) &&
             'rest' === $type;
-    }
-
-    /**
-     * Adds a name prefix to the route name of all collection routes.
-     *
-     * @param RouteCollection $collection    Route collection
-     * @param array $namePrefix              NamePrefix to add in each route name of the route collection
-     *
-     * @return RouteCollection
-     */
-    public function addParentNamePrefix(RouteCollection $collection, $namePrefix)
-    {
-        if (!isset($namePrefix) || ($namePrefix = trim($namePrefix)) === "") {
-            return $collection;
-        }
-
-        $iterator = $collection->getIterator();
-
-        foreach($iterator as $key1 => $route1)
-        {
-            $collection->add($namePrefix.$key1, $route1);
-            $collection->remove($key1);
-        }
-
-        return $collection;
     }
 }

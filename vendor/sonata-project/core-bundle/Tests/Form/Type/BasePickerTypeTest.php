@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of the Sonata package.
  *
@@ -8,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 
 namespace Sonata\CoreBundle\Tests\Form\Type;
 
@@ -30,9 +30,11 @@ class BasePickerTest extends BasePickerType
     }
 }
 
+
 /**
- * Class BasePickerTypeTest.
+ * Class BasePickerTypeTest
  *
+ * @package Sonata\CoreBundle\Tests\Form\Type
  *
  * @author Hugo Briand <briand@ekino.com>
  */
@@ -45,15 +47,15 @@ class BasePickerTypeTest extends \PHPUnit_Framework_TestCase
         $view = new FormView();
         $form = new Form($this->getMock('Symfony\Component\Form\FormConfigInterface'));
 
-        $type->finishView($view, $form, array('format' => 'yyyy-MM-dd'));
+        $type->finishView($view, $form, array());
 
         $this->assertArrayHasKey('moment_format', $view->vars);
         $this->assertArrayHasKey('dp_options', $view->vars);
         $this->assertArrayHasKey('datepicker_use_button', $view->vars);
 
         foreach ($view->vars['dp_options'] as $dpKey => $dpValue) {
-            $this->assertFalse(strpos($dpKey, '_'));
-            $this->assertFalse(strpos($dpKey, 'dp_'));
+            $this->assertFalse(strpos($dpKey, "_"));
+            $this->assertFalse(strpos($dpKey, "dp_"));
         }
 
         $this->assertEquals('text', $view->vars['type']);

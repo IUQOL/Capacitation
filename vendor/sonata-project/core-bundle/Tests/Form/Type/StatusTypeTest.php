@@ -12,7 +12,8 @@
 namespace Sonata\CoreBundle\Tests\Form\Type;
 
 use Sonata\CoreBundle\Form\Type\StatusType;
-use Symfony\Component\Form\Test\TypeTestCase;
+
+use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Choice
@@ -20,7 +21,7 @@ class Choice
     public static function getList()
     {
         return array(
-            1 => 'salut',
+            1 => 'salut'
         );
     }
 }

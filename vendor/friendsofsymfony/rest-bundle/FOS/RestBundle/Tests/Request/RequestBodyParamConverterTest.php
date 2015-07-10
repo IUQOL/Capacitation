@@ -207,27 +207,14 @@ class RequestBodyParamConverterTest extends AbstractRequestBodyParamConverterTes
 
     public function testApplyWithValidationErrors()
     {
-        $expectedPost = new Post('Post 1', 'This is a blog post');
+        $validator = $this->getMockBuilder('Symfony\Component\Validator\Validator')
+            ->disableOriginalConstructor()
+            ->getMock();
         $validationErrors = $this->getMock('Symfony\Component\Validator\ConstraintViolationList');
-
-        if (interface_exists('Symfony\Component\Validator\Validator\ValidatorInterface')) {
-            $validator = $this->getMock('Symfony\Component\Validator\Validator\ValidatorInterface');
-            $validator
-                ->expects($this->once())
-                ->method('validate')
-                ->with($expectedPost, null, array('group1'))
-                ->will($this->returnValue($validationErrors));
-        } else {
-            $validator = $this->getMock('Symfony\Component\Validator\ValidatorInterface');
-            $validator
-                ->expects($this->once())
-                ->method('validate')
-                ->with($expectedPost, array('group1'), true, true)
-                ->will($this->returnValue($validationErrors));
-        }
 
         $this->converter = new RequestBodyParamConverter($this->serializer, null, null, $validator, 'validationErrors');
 
+        $expectedPost = new Post('Post 1', 'This is a blog post');
         $this->serializer->expects($this->once())
             ->method('deserialize')
             ->with('', 'FOS\RestBundle\Tests\Request\Post', 'json')
@@ -241,6 +228,11 @@ class RequestBodyParamConverterTest extends AbstractRequestBodyParamConverterTes
                 'deep' => true,
             ),
         );
+
+        $validator->expects($this->once())
+            ->method('validate')
+            ->with($expectedPost, array('group1'), true, true)
+            ->will($this->returnValue($validationErrors));
 
         $config = $this->createConfiguration('FOS\RestBundle\Tests\Request\Post', 'post', $options);
         $this->converter->apply($request, $config);
@@ -314,12 +306,9 @@ class RequestBodyParamConverterTest extends AbstractRequestBodyParamConverterTes
         );
         $config = $this->createConfiguration(null, null, $userOptions);
 
-        if (interface_exists('Symfony\Component\Validator\Validator\ValidatorInterface')) {
-            $validator = $this->getMock('Symfony\Component\Validator\Validator\ValidatorInterface');
-        } else {
-            $validator = $this->getMock('Symfony\Component\Validator\ValidatorInterface');
-        }
-
+        $validator = $this->getMockBuilder('Symfony\Component\Validator\Validator')
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->converter = new RequestBodyParamConverter($this->serializer, null, null, $validator, 'validationErrors');
         $request = $this->createRequest();
 

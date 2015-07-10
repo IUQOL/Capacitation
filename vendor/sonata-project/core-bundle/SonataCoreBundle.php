@@ -12,9 +12,9 @@
 namespace Sonata\CoreBundle;
 
 use Sonata\CoreBundle\DependencyInjection\Compiler\AdapterCompilerPass;
-use Sonata\CoreBundle\DependencyInjection\Compiler\StatusRendererCompilerPass;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Sonata\CoreBundle\DependencyInjection\Compiler\StatusRendererCompilerPass;
 
 class SonataCoreBundle extends Bundle
 {

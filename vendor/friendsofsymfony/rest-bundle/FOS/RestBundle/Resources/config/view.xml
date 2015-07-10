@@ -47,10 +47,5 @@
             <tag name="jms_serializer.subscribing_handler" />
         </service>
 
-        <service id="fos_rest.serializer.exception_wrapper_normalizer" class="FOS\RestBundle\Serializer\ExceptionWrapperNormalizer">
-            <argument type="service" id="translator" />
-            <tag name="serializer.normalizer" />
-        </service>
-
     </services>
 </container>

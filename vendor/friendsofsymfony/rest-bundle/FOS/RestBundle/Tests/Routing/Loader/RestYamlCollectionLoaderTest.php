@@ -35,11 +35,10 @@ class RestYamlCollectionLoaderTest extends LoaderTest
 
         foreach ($etalonRoutes as $name => $params) {
             $route = $collection->get($name);
-            $methods = $route->getMethods();
 
             $this->assertNotNull($route, $name);
-            $this->assertEquals($params['path'], $route->getPath(), $name);
-            $this->assertEquals($params['methods'][0], $methods[0], $name);
+            $this->assertEquals($params['pattern'], $route->getPattern(), $name);
+            $this->assertEquals($params['method'], $route->getRequirement('_method'), $name);
             $this->assertContains($params['controller'], $route->getDefault('_controller'), $name);
         }
     }
@@ -54,11 +53,10 @@ class RestYamlCollectionLoaderTest extends LoaderTest
 
         foreach ($etalonRoutes as $name => $params) {
             $route = $collection->get($name);
-            $methods = $route->getMethods();
 
             $this->assertNotNull($route, $name);
-            $this->assertEquals($params['path'], $route->getPath(), $name);
-            $this->assertEquals($params['methods'][0], $methods[0], $name);
+            $this->assertEquals($params['pattern'], $route->getPattern(), $name);
+            $this->assertEquals($params['method'], $route->getRequirement('_method'), $name);
             $this->assertContains($params['controller'], $route->getDefault('_controller'), $name);
         }
     }
@@ -73,11 +71,10 @@ class RestYamlCollectionLoaderTest extends LoaderTest
 
         foreach ($etalonRoutes as $name => $params) {
             $route = $collection->get($name);
-            $methods = $route->getMethods();
 
             $this->assertNotNull($route, $name);
-            $this->assertEquals($params['path'], $route->getPath(), $name);
-            $this->assertEquals($params['methods'][0], $methods[0], $name);
+            $this->assertEquals($params['pattern'], $route->getPattern(), $name);
+            $this->assertEquals($params['method'], $route->getRequirement('_method'), $name);
             $this->assertContains($params['controller'], $route->getDefault('_controller'), $name);
         }
     }
@@ -90,7 +87,7 @@ class RestYamlCollectionLoaderTest extends LoaderTest
         $names = array();
         $collection = $this->loadFromYamlCollectionFixture('named_prefixed_reports_collection.yml');
         foreach ($collection as $route) {
-            $names[] = $route->getPath();
+            $names[] = $route->getPattern();
         }
         $this->assertEquals(count($names), count(array_unique($names)));
     }
@@ -224,27 +221,5 @@ class RestYamlCollectionLoaderTest extends LoaderTest
         new LoaderResolver(array($collectionLoader, $controllerLoader));
 
         return $collectionLoader->load($fixtureName, 'rest');
-    }
-
-    /**
-     * Test that YAML collection with named prefixes gets parsed correctly with inheritance.
-     */
-    public function testNamedPrefixedBaseReportsFixture()
-    {
-        $collection     = $this->loadFromYamlCollectionFixture('base_named_prefixed_reports_collection.yml');
-        $etalonRoutes   = $this->loadEtalonRoutesInfo('base_named_prefixed_reports_collection.yml');
-
-        foreach ($etalonRoutes as $name => $params) {
-            $route = $collection->get($name);
-            $methods = $route->getMethods();
-
-            $this->assertNotNull($route, $name);
-            $this->assertEquals($params['path'], $route->getPath(), $name);
-            $this->assertEquals($params['method'], $methods[0], $name);
-            $this->assertContains($params['controller'], $route->getDefault('_controller'), $name);
-        }
-
-        $name = 'api_get_billing_payments';
-        $this->assertArrayNotHasKey($name, $etalonRoutes);
     }
 }

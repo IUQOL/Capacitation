@@ -12,7 +12,7 @@
 namespace Sonata\CoreBundle\Tests\Form\Type;
 
 use Sonata\CoreBundle\Form\Type\BooleanType;
-use Symfony\Component\Form\Test\TypeTestCase;
+use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BooleanTypeTest extends TypeTestCase
@@ -47,7 +47,8 @@ class BooleanTypeTest extends TypeTestCase
     }
 
     /**
-     * The default behavior is not to transform to real boolean value .... don't ask.
+     * The default behavior is not to transform to real boolean value .... don't ask
+     *
      */
     public function testDefaultBehavior()
     {

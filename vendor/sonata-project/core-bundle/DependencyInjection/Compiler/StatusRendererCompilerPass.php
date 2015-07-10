@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of the Sonata package.
  *
@@ -9,6 +8,7 @@
  * file that was distributed with this source code.
  */
 
+
 namespace Sonata\CoreBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -16,8 +16,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class StatusRendererCompilerPass.
+ * Class StatusRendererCompilerPass
  *
+ * @package Sonata\OrderBundle\DependencyInjection\Compiler
  *
  * @author Hugo Briand <briand@ekino.com>
  */

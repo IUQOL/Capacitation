@@ -15,12 +15,18 @@ class Builder extends ContainerAware
             'navbar' => true,
         ));
 
-        $menu->addChild('Administrador', array('uri' => '#', 'atributes' => array ('onclick' => 'alert("prueba");')));
+        $menu->addChild('Administrador', array(
+            'uri' => '#',
+            'dropdown' => true,
+            'caret' => true,));
 
        
 
         // create another menu item
-        $ticket = $menu->addChild('Tickets', array('uri' => '#'));
+        $ticket = $menu->addChild('Tickets', array(
+            'uri' => '#',
+            'dropdown' => true,
+            'caret' => true,));
         
 
         // you can also add sub level's to your menu's as follows

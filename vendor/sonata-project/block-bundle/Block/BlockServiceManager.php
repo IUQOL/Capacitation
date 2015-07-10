@@ -139,7 +139,7 @@ class BlockServiceManager implements BlockServiceManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function getServicesByContext($context, $includeContainers = true)
+    public function getServicesByContext($context)
     {
         if (!array_key_exists($context, $this->contexts)) {
             return array();
@@ -147,13 +147,7 @@ class BlockServiceManager implements BlockServiceManagerInterface
 
         $services = array();
 
-        $containers = $this->container->getParameter('sonata.block.container.types');
-
         foreach ($this->contexts[$context] as $name) {
-            if (!$includeContainers && in_array($name, $containers)) {
-                continue;
-            }
-
             $services[$name] = $this->getService($name);
         }
 

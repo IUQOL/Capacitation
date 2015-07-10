@@ -37,8 +37,6 @@ abstract class Param
     public $nullable = false;
     /** @var bool */
     public $allowBlank = true;
-    /** @var array */
-    public $incompatibles = array();
 
     /**
      * @return string

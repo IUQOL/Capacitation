@@ -15,7 +15,9 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ODM\PHPCR\DocumentManager;
 
 /**
- * This is a port of the DoctrineORMAdminBundle / ModelManager class.
+ * This is a port of the DoctrineORMAdminBundle / ModelManager class
+ *
+ * @package Sonata\CoreBundle\Model\Adapter
  */
 class DoctrinePHPCRAdapter implements AdapterInterface
 {
@@ -39,17 +41,17 @@ class DoctrinePHPCRAdapter implements AdapterInterface
         }
 
         if (!$document) {
-            return;
+            return null;
         }
 
         $manager = $this->registry->getManagerForClass($document);
 
         if (!$manager instanceof DocumentManager) {
-            return;
+            return null;
         }
 
         if (!$manager->contains($document)) {
-            return;
+            return null;
         }
 
         $class = $manager->getClassMetadata(get_class($document));
@@ -72,6 +74,6 @@ class DoctrinePHPCRAdapter implements AdapterInterface
             return substr($id, 1);
         }
 
-        return;
+        return null;
     }
 }

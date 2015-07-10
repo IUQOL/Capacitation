@@ -12,13 +12,14 @@
 
 namespace Sonata\CoreBundle\Form\Type;
 
-use Sonata\CoreBundle\Form\EventListener\ResizeFormListener;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+use Sonata\CoreBundle\Form\EventListener\ResizeFormListener;
 
 class CollectionType extends AbstractType
 {
@@ -47,19 +48,9 @@ class CollectionType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @todo Remove it when bumping requirements to SF 2.7+
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
-    }
-
-    /**
      * {@inheritDoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'modifiable'             => false,
@@ -67,7 +58,7 @@ class CollectionType extends AbstractType
             'type_options'           => array(),
             'pre_bind_data_callback' => null,
             'btn_add'                => 'link_add',
-            'btn_catalogue'          => 'SonataCoreBundle',
+            'btn_catalogue'          => 'SonataCoreBundle'
         ));
     }
 

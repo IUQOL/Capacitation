@@ -197,7 +197,7 @@ class ViewHandler extends ContainerAware implements ConfigurableViewHandlerInter
     {
         $form = $this->getFormFromView($view);
 
-        if ($form && $form->isSubmitted() && !$form->isValid()) {
+        if ($form && $form->isBound() && !$form->isValid()) {
             return $this->failedValidationCode;
         }
 
@@ -380,24 +380,19 @@ class ViewHandler extends ContainerAware implements ConfigurableViewHandlerInter
     public function prepareTemplateParameters(View $view)
     {
         $data = $view->getData();
-
         if ($data instanceof FormInterface) {
-            $data = array($view->getTemplateVar() => $data->getData(), 'form' => $data);
+            return array($view->getTemplateVar() => $data->getData(), 'form' => $data->createView());
+        }
 
-        } elseif (empty($data) || !is_array($data) || is_numeric((key($data)))) {
-            $data = array($view->getTemplateVar() => $data);
+        if (empty($data) || !is_array($data) || is_numeric((key($data)))) {
+            return array($view->getTemplateVar() => $data);
         }
 
         if (isset($data['form']) && $data['form'] instanceof FormInterface) {
             $data['form'] = $data['form']->createView();
         }
 
-        $templateData = $view->getTemplateData();
-        if (is_callable($templateData)) {
-            $templateData = call_user_func($templateData, $this, $view);
-        }
-
-        return array_merge($data, $templateData);
+        return $data;
     }
 
     /**
@@ -500,7 +495,7 @@ class ViewHandler extends ContainerAware implements ConfigurableViewHandlerInter
             return $view->getData();
         }
 
-        if ($form->isValid() || !$form->isSubmitted()) {
+        if ($form->isValid() || !$form->isBound()) {
             return $form;
         }
 

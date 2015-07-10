@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of the Sonata package.
  *
@@ -14,7 +13,7 @@ namespace Sonata\CoreBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ImmutableArrayType extends AbstractType
@@ -37,7 +36,7 @@ class ImmutableArrayType extends AbstractType
 
                     if ($options === null) {
                         $options = array();
-                    } elseif (!is_array($options)) {
+                    } else if (!is_array($options)){
                         throw new \RuntimeException('the closure must return null or an array');
                     }
                 }
@@ -48,19 +47,9 @@ class ImmutableArrayType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @todo Remove it when bumping requirements to SF 2.7+
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
-    }
-
-    /**
      * {@inheritDoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'keys'    => array(),

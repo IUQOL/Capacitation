@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of the Sonata package.
  *
@@ -9,11 +8,14 @@
  * file that was distributed with this source code.
  */
 
+
 namespace Sonata\CoreBundle\Model;
 
+
 /**
- * Class MetadataInterface.
+ * Class MetadataInterface
  *
+ * @package Sonata\CoreBundle\Model
  *
  * @author Hugo Briand <briand@ekino.com>
  */

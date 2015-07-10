@@ -34,11 +34,10 @@ class RestXmlCollectionLoaderTest extends LoaderTest
 
         foreach ($etalonRoutes as $name => $params) {
             $route = $collection->get($name);
-            $methods = $route->getMethods();
 
             $this->assertNotNull($route, $name);
-            $this->assertEquals($params['path'], $route->getPath(), $name);
-            $this->assertEquals($params['methods'][0], $methods[0], $name);
+            $this->assertEquals($params['pattern'], $route->getPattern(), $name);
+            $this->assertEquals($params['method'], $route->getRequirement('_method'), $name);
             $this->assertContains($params['controller'], $route->getDefault('_controller'), $name);
         }
     }
@@ -53,11 +52,10 @@ class RestXmlCollectionLoaderTest extends LoaderTest
 
         foreach ($etalonRoutes as $name => $params) {
             $route = $collection->get($name);
-            $methods = $route->getMethods();
 
             $this->assertNotNull($route, $name);
-            $this->assertEquals($params['path'], $route->getPath(), $name);
-            $this->assertEquals($params['methods'][0], $methods[0], $name);
+            $this->assertEquals($params['pattern'], $route->getPattern(), $name);
+            $this->assertEquals($params['method'], $route->getRequirement('_method'), $name);
             $this->assertContains($params['controller'], $route->getDefault('_controller'), $name);
         }
     }

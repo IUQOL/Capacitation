@@ -12,7 +12,6 @@ namespace Sonata\BlockBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -210,16 +209,5 @@ class Configuration implements ConfigurationInterface
         ;
 
         return $treeBuilder;
-    }
-
-    /**
-     * @param array            $config
-     * @param ContainerBuilder $container
-     *
-     * @return Configuration
-     */
-    public function getConfiguration(array $config, ContainerBuilder $container)
-    {
-        return new Configuration(array());
     }
 }

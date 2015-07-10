@@ -52,12 +52,13 @@ class ExceptionController extends ContainerAware
      * @param Request                                    $request
      * @param HttpFlattenException|DebugFlattenException $exception
      * @param DebugLoggerInterface                       $logger
+     * @param string                                     $format
      *
      * @return Response
      *
      * @throws \InvalidArgumentException
      */
-    public function showAction(Request $request, $exception, DebugLoggerInterface $logger = null)
+    public function showAction(Request $request, $exception, DebugLoggerInterface $logger = null, $format = 'html')
     {
         /**
          * Validates that the exception that is handled by the Exception controller is either a DebugFlattenException
@@ -75,7 +76,7 @@ class ExceptionController extends ContainerAware
             ));
         }
 
-        $format = $this->getFormat($request, $request->getRequestFormat());
+        $format = $this->getFormat($request, $format);
         if (null === $format) {
             $message = 'No matching accepted Response format could be determined, while handling: ';
             $message .= $this->getExceptionMessage($exception);
@@ -87,7 +88,6 @@ class ExceptionController extends ContainerAware
         $code = $this->getStatusCode($exception);
         $viewHandler = $this->container->get('fos_rest.view_handler');
         $parameters = $this->getParameters($viewHandler, $currentContent, $code, $exception, $logger, $format);
-        $showException = $request->attributes->get('showException', $this->container->get('kernel')->isDebug());
 
         try {
             if (!$viewHandler->isFormatTemplating($format)) {
@@ -98,7 +98,7 @@ class ExceptionController extends ContainerAware
             $view->setFormat($format);
 
             if ($viewHandler->isFormatTemplating($format)) {
-                $view->setTemplate($this->findTemplate($request, $format, $code, $showException));
+                $view->setTemplate($this->findTemplate($request, $format, $code, $this->container->get('kernel')->isDebug()));
             }
 
             $response = $viewHandler->handle($view);
@@ -266,19 +266,19 @@ class ExceptionController extends ContainerAware
      * @param Request $request
      * @param string  $format
      * @param int     $statusCode
-     * @param bool    $showException
+     * @param bool    $debug
      *
      * @return TemplateReference
      */
-    protected function findTemplate(Request $request, $format, $statusCode, $showException)
+    protected function findTemplate(Request $request, $format, $statusCode, $debug)
     {
-        $name = $showException ? 'exception' : 'error';
-        if ($showException && 'html' == $format) {
+        $name = $debug ? 'exception' : 'error';
+        if ($debug && 'html' == $format) {
             $name = 'exception_full';
         }
 
         // when not in debug, try to find a template for the specific HTTP status code and format
-        if (!$showException) {
+        if (!$debug) {
             $template = new TemplateReference('TwigBundle', 'Exception', $name.$statusCode, $format, 'twig');
             if ($this->container->get('templating')->exists($template)) {
                 return $template;
@@ -294,6 +294,6 @@ class ExceptionController extends ContainerAware
         // default to a generic HTML exception
         $request->setRequestFormat('html');
 
-        return new TemplateReference('TwigBundle', 'Exception', $showException ? 'exception_full' : $name, 'html', 'twig');
+        return new TemplateReference('TwigBundle', 'Exception', $name, 'html', 'twig');
     }
 }

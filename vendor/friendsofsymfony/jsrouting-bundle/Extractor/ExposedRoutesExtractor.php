@@ -12,7 +12,6 @@
 namespace FOS\JsRoutingBundle\Extractor;
 
 use Symfony\Component\Routing\Route;
-use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 use JMS\I18nRoutingBundle\Router\I18nLoader;
 
@@ -39,11 +38,6 @@ class ExposedRoutesExtractor implements ExposedRoutesExtractorInterface
     protected $bundles;
 
     /**
-     * @var array
-     */
-    protected $routesToExpose;
-
-    /**
      * Default constructor.
      *
      * @param RouterInterface $router         The router.
@@ -53,10 +47,10 @@ class ExposedRoutesExtractor implements ExposedRoutesExtractorInterface
      */
     public function __construct(RouterInterface $router, array $routesToExpose = array(), $cacheDir, $bundles = array())
     {
-        $this->router         = $router;
+        $this->router = $router;
         $this->routesToExpose = $routesToExpose;
-        $this->cacheDir       = $cacheDir;
-        $this->bundles        = $bundles;
+        $this->cacheDir = $cacheDir;
+        $this->bundles = $bundles;
     }
 
     /**
@@ -64,13 +58,45 @@ class ExposedRoutesExtractor implements ExposedRoutesExtractorInterface
      */
     public function getRoutes()
     {
-        $collection = $this->router->getRouteCollection();
-        $routes     = new RouteCollection();
+        $exposedRoutes = array();
+        /** @var $route Route */
+        foreach ($this->getExposedRoutes() as $name => $route) {
+            // Maybe there is a better way to do that...
+            $compiledRoute = $route->compile();
+            $defaults = array_intersect_key(
+                $route->getDefaults(),
+                array_fill_keys($compiledRoute->getVariables(), null)
+            );
+            $requirements = $route->getRequirements();
+            $hostTokens = method_exists($compiledRoute, 'getHostTokens') ? $compiledRoute->getHostTokens() : array();
+            $exposedRoutes[$name] = new ExtractedRoute(
+                $compiledRoute->getTokens(),
+                $defaults,
+                $requirements,
+                $hostTokens
+            );
+        }
 
-        /** @var Route $route */
+        return $exposedRoutes;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getExposedRoutes()
+    {
+        $routes     = array();
+        $collection = $this->router->getRouteCollection();
+        $pattern    = $this->buildPattern();
+
         foreach ($collection->all() as $name => $route) {
-            if ($this->isRouteExposed($route, $name)) {
-                $routes->add($name, $route);
+            if (false === $route->getOption('expose')) {
+                continue;
+            }
+
+            if (($route->getOption('expose') && (true === $route->getOption('expose') || 'true' === $route->getOption('expose')))
+                || ('' !== $pattern && preg_match('#' . $pattern . '#', $name))) {
+                $routes[$name] = $route;
             }
         }
 
@@ -115,6 +141,16 @@ class ExposedRoutesExtractor implements ExposedRoutesExtractorInterface
     }
 
     /**
+     * Check whether server is serving this request from a non-standard port.
+     *
+     * @return bool
+     */
+    protected function usesNonStandardPort()
+    {
+        return $this->usesNonStandardHttpPort() || $this->usesNonStandardHttpsPort();
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getScheme()
@@ -150,19 +186,7 @@ class ExposedRoutesExtractor implements ExposedRoutesExtractorInterface
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public function isRouteExposed(Route $route, $name)
-    {
-        $pattern = $this->buildPattern();
-
-        return true === $route->getOption('expose')
-            || 'true' === $route->getOption('expose')
-            || ('' !== $pattern && preg_match('#' . $pattern . '#', $name));
-    }
-
-    /**
-     * Convert the routesToExpose array in a regular expression pattern
+     * Convert the routesToExpose array in a regular expression pattern.
      *
      * @return string
      */
@@ -177,17 +201,7 @@ class ExposedRoutesExtractor implements ExposedRoutesExtractorInterface
     }
 
     /**
-     * Check whether server is serving this request from a non-standard port
-     *
-     * @return bool
-     */
-    private function usesNonStandardPort()
-    {
-        return $this->usesNonStandardHttpPort() || $this->usesNonStandardHttpsPort();
-    }
-
-    /**
-     * Check whether server is serving HTTP over a non-standard port
+     * Checks whether server is serving HTTP over a non-standard port.
      *
      * @return bool
      */
@@ -197,7 +211,7 @@ class ExposedRoutesExtractor implements ExposedRoutesExtractorInterface
     }
 
     /**
-     * Check whether server is serving HTTPS over a non-standard port
+     * Checks whether server is serving HTTPS over a non-standard port.
      *
      * @return bool
      */

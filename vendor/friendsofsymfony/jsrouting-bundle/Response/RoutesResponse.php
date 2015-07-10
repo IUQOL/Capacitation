@@ -11,8 +11,6 @@
 
 namespace FOS\JsRoutingBundle\Response;
 
-use Symfony\Component\Routing\RouteCollection;
-
 class RoutesResponse
 {
     private $baseUrl;
@@ -20,46 +18,24 @@ class RoutesResponse
     private $prefix;
     private $host;
     private $scheme;
-    private $locale;
 
-    public function __construct($baseUrl, RouteCollection $routes = null, $prefix = null, $host = null, $scheme = null, $locale = null)
+    public function __construct($baseUrl, array $routes, $prefix, $host, $scheme)
     {
         $this->baseUrl = $baseUrl;
-        $this->routes  = $routes ?: new RouteCollection();
+        $this->routes  = $routes;
         $this->prefix  = $prefix;
         $this->host    = $host;
         $this->scheme  = $scheme;
-        $this->locale  = $locale;
     }
 
-    public function getBaseUrl()
+    public function getBase_url()
     {
         return $this->baseUrl;
     }
 
     public function getRoutes()
     {
-        $exposedRoutes = array();
-        foreach ($this->routes->all() as $name => $route) {
-            $compiledRoute = $route->compile();
-            $defaults      = array_intersect_key(
-                $route->getDefaults(),
-                array_fill_keys($compiledRoute->getVariables(), null)
-            );
-
-            if (!isset($defaults['_locale']) && in_array('_locale', $compiledRoute->getVariables())) {
-                $defaults['_locale'] = $this->locale;
-            }
-
-            $exposedRoutes[$name] = array(
-                'tokens'       => $compiledRoute->getTokens(),
-                'defaults'     => $defaults,
-                'requirements' => $route->getRequirements(),
-                'hosttokens'   => method_exists($compiledRoute, 'getHostTokens') ? $compiledRoute->getHostTokens() : array(),
-            );
-        }
-
-        return $exposedRoutes;
+        return $this->routes;
     }
 
     public function getPrefix()

@@ -36,7 +36,7 @@ class AdapterChain implements AdapterInterface
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -52,6 +52,6 @@ class AdapterChain implements AdapterInterface
             }
         }
 
-        return;
+        return null;
     }
 }

@@ -40,7 +40,4 @@ final class Service
 
     /** @var boolean */
     public $abstract;
-
-    /** @var array<string> */
-    public $environments = array();
 }

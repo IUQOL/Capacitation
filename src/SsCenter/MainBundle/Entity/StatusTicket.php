@@ -10,14 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
 class StatusTicket
 {
     /**
-     * @var string
+     * @var integer
      */
     private $id;
-
-    /**
-     * @var string
-     */
-    private $generator;
 
     /**
      * @var string
@@ -43,49 +38,13 @@ class StatusTicket
     }
 
     /**
-     * Set id
-     *
-     * @param string $id
-     * @return StatusTicket
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
      * Get id
      *
-     * @return string 
+     * @return integer 
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set generator
-     *
-     * @param string $generator
-     * @return StatusTicket
-     */
-    public function setGenerator($generator)
-    {
-        $this->generator = $generator;
-
-        return $this;
-    }
-
-    /**
-     * Get generator
-     *
-     * @return string 
-     */
-    public function getGenerator()
-    {
-        return $this->generator;
     }
 
     /**

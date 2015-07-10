@@ -15,10 +15,13 @@ use FOS\RestBundle\Request\RequestBodyParamConverter20;
 use JMS\Serializer\Exception\RuntimeException;
 use JMS\Serializer\Exception\UnsupportedFormatException;
 
+/**
+ * @author Tyler Stroud <tyler@tylerstroud.com>
+ */
 class RequestBodyParamConverter20Test extends AbstractRequestBodyParamConverterTest
 {
-    private $serializer;
-    private $converter;
+    protected $serializer;
+    protected $converter;
 
     public function setUp()
     {
@@ -31,8 +34,10 @@ class RequestBodyParamConverter20Test extends AbstractRequestBodyParamConverterT
             ),
             'configuration'
         );
-        if ('Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationInterface' !== $parameter->getClass()->getName()) {
-            $this->markTestSkipped('skipping RequestBodyParamConverter20Test due to an incompatible version of the SensioFrameworkExtraBundle');
+        if ('Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationInterface' != $parameter->getClass()->getName()) {
+            $this->markTestSkipped(
+                'skipping RequestBodyParamConverter20Test due to an incompatible version of the SensioFrameworkExtraBundle'
+            );
         }
 
         $this->serializer = $this->getMock('JMS\Serializer\SerializerInterface');

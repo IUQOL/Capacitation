@@ -44,7 +44,6 @@ class ContainerBlockService extends BaseBlockService
         ));
 
         $formMapper->add('children', 'sonata_type_collection', array(), array(
-            'admin_code' => 'sonata.page.admin.block',
             'edit'   => 'inline',
             'inline' => 'table',
             'sortable' => 'position'

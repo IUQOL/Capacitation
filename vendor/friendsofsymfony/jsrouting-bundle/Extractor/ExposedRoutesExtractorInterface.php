@@ -15,19 +15,21 @@ use Symfony\Component\Config\Resource\ResourceInterface;
 use Symfony\Component\Routing\Route;
 
 /**
- * @author William DURAND <william.durand1@gmail.com>
+ * ExposedRoutesExtractorInterface interface.
+ *
+ * @author      William DURAND <william.durand1@gmail.com>
  */
 interface ExposedRoutesExtractorInterface
 {
     /**
-     * Returns a collection of exposed routes
+     * Returns an array of exposed routes where keys are the route names.
      *
-     * @return \Symfony\Component\Routing\RouteCollection
+     * @return ExtractedRoute[]
      */
     public function getRoutes();
 
     /**
-     * Return the Base URL
+     * Returns the Base URL.
      *
      * @return string
      */
@@ -66,19 +68,16 @@ interface ExposedRoutesExtractorInterface
     public function getCachePath($locale);
 
     /**
-     * Return an array of routing resources
+     * Returns an array of routing resources.
      *
      * @return ResourceInterface[]
      */
     public function getResources();
 
     /**
-     * Tell whether a route should be considered as exposed
+     * Returns an array of all exposed Route objects.
      *
-     * @param Route  $route
-     * @param string $name
-     *
-     * @return bool
+     * @return Route[]
      */
-    public function isRouteExposed(Route $route, $name);
+    public function getExposedRoutes();
 }

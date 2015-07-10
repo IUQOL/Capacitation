@@ -18,6 +18,6 @@
 
 namespace JMS\Serializer\Tests\Fixtures\Discriminator;
 
-class Car extends Vehicle implements VehicleInterface
+class Car extends Vehicle
 {
 }

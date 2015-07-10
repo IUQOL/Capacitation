@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Client
  */
-class Client {
-
+class Client
+{
     /**
      * @var integer
      */
@@ -52,7 +52,8 @@ class Client {
     /**
      * Constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->contact = new \Doctrine\Common\Collections\ArrayCollection();
         $this->clientProducts = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tickets = new \Doctrine\Common\Collections\ArrayCollection();
@@ -63,7 +64,8 @@ class Client {
      *
      * @return integer 
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -73,7 +75,8 @@ class Client {
      * @param string $name
      * @return Client
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
@@ -84,7 +87,8 @@ class Client {
      *
      * @return string 
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -94,7 +98,8 @@ class Client {
      * @param string $phone
      * @return Client
      */
-    public function setPhone($phone) {
+    public function setPhone($phone)
+    {
         $this->phone = $phone;
 
         return $this;
@@ -105,7 +110,8 @@ class Client {
      *
      * @return string 
      */
-    public function getPhone() {
+    public function getPhone()
+    {
         return $this->phone;
     }
 
@@ -115,7 +121,8 @@ class Client {
      * @param string $address
      * @return Client
      */
-    public function setAddress($address) {
+    public function setAddress($address)
+    {
         $this->address = $address;
 
         return $this;
@@ -126,7 +133,8 @@ class Client {
      *
      * @return string 
      */
-    public function getAddress() {
+    public function getAddress()
+    {
         return $this->address;
     }
 
@@ -136,7 +144,8 @@ class Client {
      * @param string $nit
      * @return Client
      */
-    public function setNit($nit) {
+    public function setNit($nit)
+    {
         $this->nit = $nit;
 
         return $this;
@@ -147,7 +156,8 @@ class Client {
      *
      * @return string 
      */
-    public function getNit() {
+    public function getNit()
+    {
         return $this->nit;
     }
 
@@ -157,7 +167,8 @@ class Client {
      * @param \SsCenter\MainBundle\Entity\ContactForm $contact
      * @return Client
      */
-    public function addContact(\SsCenter\MainBundle\Entity\ContactForm $contact) {
+    public function addContact(\SsCenter\MainBundle\Entity\ContactForm $contact)
+    {
         $this->contact[] = $contact;
 
         return $this;
@@ -168,7 +179,8 @@ class Client {
      *
      * @param \SsCenter\MainBundle\Entity\ContactForm $contact
      */
-    public function removeContact(\SsCenter\MainBundle\Entity\ContactForm $contact) {
+    public function removeContact(\SsCenter\MainBundle\Entity\ContactForm $contact)
+    {
         $this->contact->removeElement($contact);
     }
 
@@ -177,7 +189,8 @@ class Client {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getContact() {
+    public function getContact()
+    {
         return $this->contact;
     }
 
@@ -187,7 +200,8 @@ class Client {
      * @param \SsCenter\MainBundle\Entity\ClientProduct $clientProducts
      * @return Client
      */
-    public function addClientProduct(\SsCenter\MainBundle\Entity\ClientProduct $clientProducts) {
+    public function addClientProduct(\SsCenter\MainBundle\Entity\ClientProduct $clientProducts)
+    {
         $this->clientProducts[] = $clientProducts;
 
         return $this;
@@ -198,7 +212,8 @@ class Client {
      *
      * @param \SsCenter\MainBundle\Entity\ClientProduct $clientProducts
      */
-    public function removeClientProduct(\SsCenter\MainBundle\Entity\ClientProduct $clientProducts) {
+    public function removeClientProduct(\SsCenter\MainBundle\Entity\ClientProduct $clientProducts)
+    {
         $this->clientProducts->removeElement($clientProducts);
     }
 
@@ -207,7 +222,8 @@ class Client {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getClientProducts() {
+    public function getClientProducts()
+    {
         return $this->clientProducts;
     }
 
@@ -217,7 +233,8 @@ class Client {
      * @param \SsCenter\MainBundle\Entity\Ticket $tickets
      * @return Client
      */
-    public function addTicket(\SsCenter\MainBundle\Entity\Ticket $tickets) {
+    public function addTicket(\SsCenter\MainBundle\Entity\Ticket $tickets)
+    {
         $this->tickets[] = $tickets;
 
         return $this;
@@ -228,7 +245,8 @@ class Client {
      *
      * @param \SsCenter\MainBundle\Entity\Ticket $tickets
      */
-    public function removeTicket(\SsCenter\MainBundle\Entity\Ticket $tickets) {
+    public function removeTicket(\SsCenter\MainBundle\Entity\Ticket $tickets)
+    {
         $this->tickets->removeElement($tickets);
     }
 
@@ -237,12 +255,8 @@ class Client {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getTickets() {
+    public function getTickets()
+    {
         return $this->tickets;
     }
-
-    public function __toString() {
-        return $this->getName();
-    }
-
 }

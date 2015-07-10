@@ -76,16 +76,16 @@ class ViewHandlerTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getStatusCodeDataProvider
      */
-    public function testGetStatusCode($expected, $data, $isSubmitted, $isValid, $isSubmittedCalled, $isValidCalled, $noContentCode)
+    public function testGetStatusCode($expected, $data, $isBound, $isValid, $isBoundCalled, $isValidCalled, $noContentCode)
     {
         $reflectionMethod = new \ReflectionMethod('FOS\RestBundle\View\ViewHandler', 'getStatusCode');
         $reflectionMethod->setAccessible(true);
 
-        $form = $this->getMock('Symfony\Component\Form\Form', array('isSubmitted', 'isValid'), array(), '', false);
+        $form = $this->getMock('Symfony\Component\Form\Form', array('isBound', 'isValid'), array(), '', false);
         $form
-            ->expects($this->exactly($isSubmittedCalled))
-            ->method('isSubmitted')
-            ->will($this->returnValue($isSubmitted));
+            ->expects($this->exactly($isBoundCalled))
+            ->method('isBound')
+            ->will($this->returnValue($isBound));
         $form
             ->expects($this->exactly($isValidCalled))
             ->method('isValid')
@@ -215,14 +215,14 @@ class ViewHandlerTest extends \PHPUnit_Framework_TestCase
         $viewHandler = new ViewHandler(null, $expectedFailedValidationCode = Codes::HTTP_I_AM_A_TEAPOT);
         $viewHandler->setContainer($container);
 
-        $form = $this->getMock('Symfony\\Component\\Form\\Form', array('createView', 'getData', 'isValid', 'isSubmitted'), array(), '', false);
+        $form = $this->getMock('Symfony\\Component\\Form\\Form', array('createView', 'getData', 'isValid', 'isBound'), array(), '', false);
         $form
             ->expects($this->any())
             ->method('isValid')
             ->will($this->returnValue(false));
         $form
             ->expects($this->any())
-            ->method('isSubmitted')
+            ->method('isBound')
             ->will($this->returnValue(true));
 
         $view = new View($form);
@@ -266,7 +266,7 @@ class ViewHandlerTest extends \PHPUnit_Framework_TestCase
         $viewHandler->setContainer($container);
 
         if ($form) {
-            $data = $this->getMock('Symfony\Component\Form\Form', array('createView', 'getData', 'isValid', 'isSubmitted'), array(), '', false);
+            $data = $this->getMock('Symfony\Component\Form\Form', array('createView', 'getData', 'isValid', 'isBound'), array(), '', false);
             $data
                 ->expects($this->exactly($createViewCalls))
                 ->method('createView')
@@ -281,7 +281,7 @@ class ViewHandlerTest extends \PHPUnit_Framework_TestCase
                 ->will($this->returnValue($formIsValid));
             $data
                 ->expects($this->any())
-                ->method('isSubmitted')
+                ->method('isBound')
                 ->will($this->returnValue(true));
         } else {
             $data = array('foo' => 'bar');
@@ -500,16 +500,12 @@ class ViewHandlerTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider prepareTemplateParametersDataProvider
      */
-    public function testPrepareTemplateParametersWithProvider($viewData, $templateData, $expected)
+    public function testPrepareTemplateParametersWithProvider($viewData, $expected)
     {
-        $handler = new ViewHandler(array('html' => true));
+        $handler = new ViewHandler();
 
         $view = new View();
-        $view->setFormat('html');
         $view->setData($viewData);
-
-        if (null !== $templateData)
-            $view->setTemplateData($templateData);
 
         $this->assertEquals($expected, $handler->prepareTemplateParameters($view));
     }
@@ -532,29 +528,11 @@ class ViewHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('getData')
             ->will($this->returnValue($formView));
 
-        $self = $this;
-
         return array(
-            'assoc array does not change'   => array(array('foo' => 'bar'), null, array('foo' => 'bar')),
-            'ordered array is wrapped as data key'  => array(array('foo', 'bar'), null, array('data' => array('foo', 'bar'))),
-            'object is wrapped as data key' => array($object, null, array('data' => $object)),
-            'form is wrapped as form key'   => array($form, null, array('form' => $formView, 'data' => $formView)),
-            'template data is added to data'   => array(array('foo' => 'bar'), array('baz' => 'qux'), array('foo' => 'bar', 'baz' => 'qux')),
-            'lazy template data is added to data'   => array(
-                array('foo' => 'bar'),
-                function() { return array('baz' => 'qux'); },
-                array('foo' => 'bar', 'baz' => 'qux')
-            ),
-            'lazy template data have reference to viewhandler and view'   => array(
-                array('foo' => 'bar'),
-                function ($handler, $view) use ($self) {
-                    $self->assertInstanceOf('FOS\\RestBundle\\View\\ViewHandlerInterface', $handler);
-                    $self->assertInstanceOf('FOS\\RestBundle\\View\\View', $view);
-                    $self->assertTrue($handler->isFormatTemplating($view->getFormat()));
-                    return array('format' => $view->getFormat());
-                },
-                array('foo' => 'bar', 'format' => 'html')
-            ),
+            'assoc array does not change'   => array(array('foo' => 'bar'), array('foo' => 'bar')),
+            'ordered array is wrapped as data key'  => array(array('foo', 'bar'), array('data' => array('foo', 'bar'))),
+            'object is wrapped as data key' => array($object, array('data' => $object)),
+            'form is wrapped as form key'   => array($form, array('form' => $formView, 'data' => $formView)),
         );
     }
 

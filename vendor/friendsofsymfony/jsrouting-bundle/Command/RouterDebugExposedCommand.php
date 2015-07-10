@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Command\RouterDebugCommand;
 use Symfony\Bundle\FrameworkBundle\Console\Helper\DescriptorHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
 
 /**
  * A console command for retrieving information about exposed routes.
@@ -57,39 +57,43 @@ EOF
     {
         /** @var ExposedRoutesExtractorInterface $extractor */
         $extractor = $this->getContainer()->get('fos_js_routing.extractor');
-
-        if ($name = $input->getArgument('name')) {
-            /** @var Route $route */
-            $route = $this->getContainer()->get('router')->getRouteCollection()->get($name);
+        if ($input->getArgument('name')) {
+            $route = $this->getContainer()->get('router')->getRouteCollection()->get($input->getArgument('name'));
 
             if (!$route) {
-                throw new \InvalidArgumentException(sprintf('The route "%s" does not exist.', $name));
+                throw new \InvalidArgumentException(sprintf('The route "%s" does not exist.', $input->getArgument('name')));
             }
 
-            if (!$extractor->isRouteExposed($route, $name)) {
-                throw new \InvalidArgumentException(sprintf('The route "%s" was found, but it is not an exposed route.', $name));
+            $exposedRoutes = $extractor->getExposedRoutes();
+            if (!isset($exposedRoutes[$input->getArgument('name')])) {
+                throw new \InvalidArgumentException(sprintf('The route "%s" was found, but it is not an exposed route.', $input->getArgument('name')));
             }
 
             if (!class_exists('Symfony\Bundle\FrameworkBundle\Console\Helper\DescriptorHelper')) {
-                // BC layer for Symfony 2.3
-                $this->outputRoute($output, $name);
+                // BC layer for Symfony 2.3 and lower
+                $this->outputRoute($output, $input->getArgument('name'));
             } else {
                 $helper = new DescriptorHelper();
                 $helper->describe($output, $route, array(
-                    'format'           => $input->getOption('format'),
-                    'raw_text'         => $input->getOption('raw'),
+                    'format' => $input->getOption('format'),
+                    'raw_text' => $input->getOption('raw'),
                     'show_controllers' => $input->getOption('show-controllers'),
                 ));
             }
         } else {
             if (!class_exists('Symfony\Bundle\FrameworkBundle\Console\Helper\DescriptorHelper')) {
-                // BC layer for Symfony 2.3
-                $this->outputRoutes($output, $extractor->getRoutes());
+                // BC layer for Symfony 2.3 and lower
+                $this->outputRoutes($output, $extractor->getExposedRoutes());
             } else {
+                $routeCollection = new RouteCollection();
+                foreach ($extractor->getExposedRoutes() as $name => $route) {
+                    $routeCollection->add($name, $route);
+                }
+
                 $helper = new DescriptorHelper();
-                $helper->describe($output, $extractor->getRoutes(), array(
-                    'format'           => $input->getOption('format'),
-                    'raw_text'         => $input->getOption('raw'),
+                $helper->describe($output, $routeCollection, array(
+                    'format' => $input->getOption('format'),
+                    'raw_text' => $input->getOption('raw'),
                     'show_controllers' => $input->getOption('show-controllers'),
                 ));
             }

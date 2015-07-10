@@ -8,8 +8,6 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles = array(
-            
-            //Core Bundles
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -18,31 +16,40 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            
-            //Bundles de terceros
-            
-            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
-            //BUNDLES DE SONATA
-//            new Sonata\CoreBundle\SonataCoreBundle(),
-//            new Sonata\BlockBundle\SonataBlockBundle(),
-//            new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(), 
-//            new FOS\UserBundle\FOSUserBundle(),
-//            new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
-//            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
-//            new Sonata\AdminBundle\SonataAdminBundle(),
-//   
-//            new FOS\RestBundle\FOSRestBundle(),
-//            
-//            new JMS\SerializerBundle\JMSSerializerBundle(),
-//         
-            
-            //Bundles SSCENTER
             new AppBundle\AppBundle(),
-            new SsCenterBundle\CapacitationBundle(),
-            new SsCenter\MainBundle\SsCenterMainBundle(),
- //           new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+            new Sonata\CoreBundle\SonataCoreBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Sonata\jQueryBundle\SonatajQueryBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            new Sonata\AdminBundle\SonataAdminBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+            new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+//            new Sonata\CacheBundle\SonataCacheBundle(),
+            new Sonata\IntlBundle\SonataIntlBundle(),
+            new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
+            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+            new Sonata\FormatterBundle\SonataFormatterBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+            new JMS\AopBundle\JMSAopBundle(),
+            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
+            new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new Spy\TimelineBundle\SpyTimelineBundle(),
+            new Sonata\TimelineBundle\SonataTimelineBundle(),
+            new Sonata\NotificationBundle\SonataNotificationBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+            new Application\Sonata\NotificationBundle\ApplicationSonataNotificationBundle(),
+            new Application\Sonata\TimelineBundle\ApplicationSonataTimelineBundle(),
+            //Mopa menu bundle
+            new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
+//            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Craue\FormFlowBundle\CraueFormFlowBundle(),
+            new Ob\HighchartsBundle\ObHighchartsBundle(),
             
+            new SsCenter\MainBundle\SsCenterMainBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

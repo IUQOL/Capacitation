@@ -11,10 +11,10 @@
 
 namespace Sonata\CoreBundle\Form\EventListener;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\Exception\UnexpectedTypeException;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Resize a collection form element based on the data sent from the client.
@@ -63,8 +63,8 @@ class ResizeFormListener implements EventSubscriberInterface
     {
         return array(
             FormEvents::PRE_SET_DATA    => 'preSetData',
-            FormEvents::PRE_SUBMIT      => 'preBind',
-            FormEvents::SUBMIT          => 'onBind',
+            FormEvents::PRE_BIND        => 'preBind',
+            FormEvents::BIND            => 'onBind',
         );
     }
 
@@ -94,8 +94,8 @@ class ResizeFormListener implements EventSubscriberInterface
         // Then add all rows again in the correct order
         foreach ($data as $name => $value) {
             $options = array_merge($this->typeOptions, array(
-                'property_path' => '['.$name.']',
-                'data'          => $value,
+                'property_path' => '[' . $name . ']',
+                'data'          => $value
             ));
 
             $form->add($name, $this->type, $options);
@@ -103,29 +103,12 @@ class ResizeFormListener implements EventSubscriberInterface
     }
 
     /**
-     * @param FormEvent $event
-     *
-     * @deprecated Since version 2.3, to be renamed in 3.0.
-     *             Use {@link preSubmit} instead
-     */
-    public function preBind(FormEvent $event)
-    {
-        // BC prevention for class extending this one.
-        if (get_called_class() !== 'Sonata\CoreBundle\Form\EventListener\ResizeFormListener') {
-            trigger_error(__CLASS__.'::'.__METHOD__.' is deprecated since 2.3 and will be renamed in 3.0. Use '.__CLASS__.'::preSubmit instead.', E_USER_DEPRECATED);
-        }
-
-        $this->preSubmit($event);
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormEvent $event
      *
      * @return mixed
-     *
      * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
      */
-    public function preSubmit(FormEvent $event)
+    public function preBind(FormEvent $event)
     {
         if (!$this->resizeOnBind) {
             return;
@@ -151,7 +134,7 @@ class ResizeFormListener implements EventSubscriberInterface
         foreach ($data as $name => $value) {
             if (!$form->has($name)) {
                 $buildOptions = array(
-                    'property_path' => '['.$name.']',
+                    'property_path' => '[' . $name . ']',
                 );
 
                 if ($this->preBindDataCallback) {
@@ -170,29 +153,12 @@ class ResizeFormListener implements EventSubscriberInterface
     }
 
     /**
-     * @param FormEvent $event
-     *
-     * @deprecated Since version 2.3, to be removed in 3.0.
-     *             Use {@link onSubmit} instead
-     */
-    public function onBind(FormEvent $event)
-    {
-        // BC prevention for class extending this one.
-        if (get_called_class() !== 'Sonata\CoreBundle\Form\EventListener\ResizeFormListener') {
-            trigger_error(__CLASS__.'::'.__METHOD__.' is deprecated since 2.3 and will be renamed in 3.0. Use '.__CLASS__.'::onSubmit instead.', E_USER_DEPRECATED);
-        }
-
-        $this->onSubmit($event);
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormEvent $event
      *
      * @return mixed
-     *
      * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
      */
-    public function onSubmit(FormEvent $event)
+    public function onBind(FormEvent $event)
     {
         if (!$this->resizeOnBind) {
             return;

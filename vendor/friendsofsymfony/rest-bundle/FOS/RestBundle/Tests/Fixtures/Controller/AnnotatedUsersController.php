@@ -77,10 +77,10 @@ class AnnotatedUsersController extends Controller
     {} // [POST]    /users/{slug}/rate
 
     /**
-     * @Route("/users/{slug}/rate_comment/{id}", requirements={"slug" = "[a-z]+", "id" = "\d+"}, methods={"PATCH", "POST"})
+     * @Route("/users/{slug}/rate_comment/{id}", requirements={"slug" = "[a-z]+", "id" = "\d+"})
      */
     public function rateUserCommentAction($slug, $id)
-    {} // [PATCH, POST]     /users/{slug}/rate_comment/{id}
+    {} // [POST]     /users/{slug}/rate_comment/{id}
 
     /**
      * @Get

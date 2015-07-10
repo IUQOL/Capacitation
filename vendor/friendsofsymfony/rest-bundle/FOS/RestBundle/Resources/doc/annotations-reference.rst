@@ -16,7 +16,6 @@ QueryParam
      *   name="",
      *   key=null,
      *   requirements="",
-     *   incompatibles={},
      *   default=null,
      *   description="",
      *   strict=false,
